@@ -17,9 +17,9 @@
             },
             pools = [
                 { label: "Pool A", pool: ["Pittsburgh (1)", "Georgia (8)", "Wisconsin (12)", "Texas (13)", "Auburn (17)"] },
-                { label: "Pool B", pool: ["Texas A&M (2)", "Central Florida (7)", "Minnesota (11)", "Western Washington (14)", "Cincinnati (18)"] },
-                { label: "Pool C", pool: ["North Carolina (3)", "Florida State (6)", "Maryland (10)", "Oregon (15)", "Illinois (19)"] },
-                { label: "Pool D", pool: ["North Carolina-Wilmington (4)", "Colorado (5)", "Massachusetts (9)", "California-Santa Barbara (13)", "Cornell (20)"] }
+                { label: "Pool B", pool: ["Texas A&M (2)", "UCF (7)", "Minnesota (11)", "W. Washington (14)", "Cincinnati (18)"] },
+                { label: "Pool C", pool: ["UNC (3)", "Florida State (6)", "Maryland (10)", "Oregon (15)", "Illinois (19)"] },
+                { label: "Pool D", pool: ["UNCW (4)", "Colorado (5)", "UMass (9)", "UCSB (13)", "Cornell (20)"] }
             ],
             contentMap = {
                 profile: function () {
@@ -33,8 +33,6 @@
                         //TODO: CHECK MAP AGAINST RETURN FROM PARSE DATA STORAGE HERE
                         matchups.push(convertMatchups(matchMap));
                     }
-
-                    console.log(matchups);
 
                     $.ajax({
                         url: "../html/tpl/profile.tpl",
@@ -95,6 +93,8 @@ function getMatchups(pool, pool_key) {
             k++;
         }
     }
+
+    return matchups;
 }
 
 function convertMatchups(matchups) {
