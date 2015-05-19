@@ -34,6 +34,8 @@
                         matchups.push(convertMatchups(matchMap));
                     }
 
+                    console.log(matchups);
+
                     $.ajax({
                         url: "../html/tpl/profile.tpl",
                         success: function (data) {

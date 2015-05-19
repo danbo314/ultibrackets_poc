@@ -4,7 +4,7 @@
             {{#each pools}}
                 <td>
                     <table>
-                        <thead>{{label}}</thead>
+                        <th>{{label}}</th>
                         {{#each pool}}
                             <tr><td>{{this}}</td></tr>
                         {{/each}}
