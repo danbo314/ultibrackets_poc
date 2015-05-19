@@ -8,13 +8,18 @@
 
     var currentUser = Parse.User.current();
 
-    $.ajax({
-        url: "../html/tpl/user.tpl",
-        success: function (data) {
-            var template = Handlebars.compile(data);
+    if (currentUser) {
+        $.ajax({
+            url: "../html/tpl/user.tpl",
+            success: function (data) {
+                var template = Handlebars.compile(data);
 
-            $("#test").html(template(currentUser.attributes));
-        }
-    });
+                $("#test").html(template(currentUser.attributes));
+            }
+        });
+    }
+    else {
+        window.location.href = "../index.html";
+    }
 
 }(jQuery));

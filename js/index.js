@@ -14,7 +14,6 @@
         window.location.href = "html/user.html";
     }
     else {
-    }
         // show the signup or login page
 
         var $loginReg = $("#loginReg"),
@@ -39,10 +38,9 @@
             click: function () {
                 var uname = $("#r_uname").val(),
                     name = $("#r_name").val(),
-                    pass = $("#r_pword").val(),
-                    conf = $("#r_pword_conf").val();
+                    pass = $("#r_pword").val();
 
-                if (uname && uname !== "" && name && name !== "" && pass && conf && pass === conf) {
+                if (uname && uname !== "" && name && name !== "" && pass && pass !== "") {
                     var user = new Parse.User();
 
                     user.set("username", uname);
@@ -64,7 +62,6 @@
                     console.log(uname);
                     console.log(name);
                     console.log(pass);
-                    console.log(conf);
                 }
             }
         });
@@ -84,6 +81,6 @@
                 });
             }
         });
-    //}
+    }
 
 }(jQuery));
