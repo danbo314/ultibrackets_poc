@@ -11,7 +11,7 @@
 
     if (currentUser) {
         alert("should redirect");
-        window.location.href = "../html/user.html";
+        window.location.href = "html/user.html";
     }
     else {
     }
@@ -37,27 +37,34 @@
 
         $("#regButton").on({
             click: function () {
-                console.log("clicked register button");
-                var uname = $("#r_uname").text(),
-                    name = $("#r_name").text(),
-                    pass = $("#r_pword").text(),
-                    conf = $("#r_pword_conf").text();
+                var uname = $("#r_uname").val(),
+                    name = $("#r_name").val(),
+                    pass = $("#r_pword").val(),
+                    conf = $("#r_pword_conf").val();
 
                 if (uname && uname !== "" && name && name !== "" && pass && conf && pass === conf) {
                     var user = new Parse.User();
 
                     user.set("username", uname);
                     user.set("password", pass);
+                    user.set("name", name);
 
                     user.signUp(null, {
                         success: function (user) {
                             alert("success");
-                            window.location.href = "../html/user.html";
+                            window.location.href = "html/user.html";
                         },
                         error: function (user, error) {
                             alert("ERROR " + error.code + " " + error.message);
                         }
                     });
+                }
+                else {
+                    console.log("error with vars");
+                    console.log(uname);
+                    console.log(name);
+                    console.log(pass);
+                    console.log(conf);
                 }
             }
         });
