@@ -82,3 +82,8 @@ body {
 .lr_input:focus {
     border-color: #07bcde;
 }
+
+#loginReg > hr {
+    width: 40%;
+    border-color: #07bcde;
+}

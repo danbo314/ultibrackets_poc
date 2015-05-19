@@ -10,15 +10,20 @@
     var currentUser = Parse.User.current();
 
     if (currentUser) {
-        alert("should redirect");
         window.location.href = "html/user.html";
     }
     else {
-        // show the signup or login page
-
-        var $loginReg = $("#loginReg"),
+        var pools = [
+                ["Pittsburgh (1)", "Georgia (8)", "Wisconsin (12)", "Texas (13)", "Auburn (17)"],
+                ["Texas A&M (2)", "Central Florida (7)", "Minnesota (11)", "Western Washington (14)", "Cincinnati (18)"],
+                ["North Carolina (3)", "Florida State (6)", "Maryland (10)", "Oregon (15)", "Illinois (19)"],
+                ["North Carolina-Wilmington (4)", "Colorado (5)", "Massachusetts (9)", "California-Santa Barbara (13)", "Cornell (20)"]
+            ],
+            $loginReg = $("#loginReg"),
             $loginBtn = $loginReg.find("#login > .button"),
-            $regBtn = $loginReg.find("#register > .button");
+            $regBtn = $loginReg.find("#register > .button"),
+            PoolPlayGame = Parse.Object.extend("PoolPlayGame"),
+            PrequartersTeam = Parse.Object.extend("Post"),
 
         $loginBtn.on({
             click: function () {
