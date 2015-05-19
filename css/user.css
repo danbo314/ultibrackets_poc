@@ -56,10 +56,6 @@
     border-bottom: 1px solid #07bcde;
 }
 
-#pools > table table td {
-    width: 200px;
-}
-
 #games,
 #games > table {
     width: 80%;

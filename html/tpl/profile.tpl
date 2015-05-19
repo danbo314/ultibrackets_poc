@@ -14,7 +14,7 @@
         </tr>
     </table>
 </div>
-<div id="games>
+<div id="games">
     <table>
         <tr>
             {{#each ppGames}}
