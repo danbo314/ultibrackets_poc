@@ -52,7 +52,6 @@
 
                     user.signUp(null, {
                         success: function (user) {
-                            alert("success");
                             window.location.href = "html/user.html";
                         },
                         error: function (user, error) {
@@ -76,7 +75,7 @@
 
                 Parse.User.logIn(uname, pass, {
                     success: function (user) {
-                        alert("success");
+                        window.location.href = "html/user.html";
                     },
                     error: function (user, error) {
                         alert("ERROR " + error.code + " " + error.message);
