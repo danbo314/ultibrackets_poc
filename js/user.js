@@ -14,6 +14,13 @@
                     Parse.User.logOut();
                     window.location.href = "../index.html";
                 });
+
+                $("#brackets, #leaderboard").click(function () {
+                    $(".tab.selected").removeClass("selected");
+                    $(this).addClass("selected");
+
+                    showContent();
+                });
             },
             pools = [
                 { label: "Pool A", pool: ["Pittsburgh (1)", "Georgia (8)", "Wisconsin (12)", "Texas (13)", "Auburn (17)"] },
@@ -43,6 +50,12 @@
                                 pools: pools,
                                 ppGames: matchups
                             }));
+
+                            $(".ppGame").click(function () {
+                                $(this).siblings(".selected").removeClass("selected");
+                                $(this).addClass("selected");
+                                //TODO: SAVE THIS CHOICE TO PARSE
+                            });
                         }
                     });
                 },
@@ -87,6 +100,7 @@ function getMatchups(pool, pool_key) {
         for (j = i+1; j < plen; j++) {
             key = pool_key+"_"+k;
             matchups[key] = {
+                key: key,
                 t1: pool[i],
                 t2: pool[j]
             };

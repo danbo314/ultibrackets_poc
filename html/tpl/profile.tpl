@@ -22,10 +22,10 @@
                     <table>
                         {{#each this}}
                             <tr>
-                                <td align="center">
-                                    <span class="button{{#if t1Selected}} selected{{/if}}">{{t1}}</span>
+                                <td align="center" id="{{key}}">
+                                    <span class="ppGame button{{#if t1Selected}} selected{{/if}}">{{t1}}</span>
                                     <span>vs.</span>
-                                    <span class="button{{#if t2Selected}} selected{{/if}}">{{t2}}</span>
+                                    <span class="ppGame button{{#if t2Selected}} selected{{/if}}">{{t2}}</span>
                                 </td>
                             </tr>
                         {{/each}}
