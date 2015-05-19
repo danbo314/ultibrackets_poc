@@ -25,14 +25,14 @@
 
         $loginBtn.on({
             click: function () {
-                $("#login, #register").hide();
+                $("#login, #register, hr").hide();
                 $("#loginCreds").show();
             }
         });
 
         $regBtn.on({
             click: function () {
-                $("#login, #register").hide();
+                $("#login, #register, hr").hide();
                 $("#regCreds").show();
             }
         });
@@ -71,8 +71,8 @@
 
         $("#loginButton").on({
             click: function () {
-                var uname = $("#l_uname").text(),
-                    pass = $("#l_pword").text();
+                var uname = $("#l_uname").val(),
+                    pass = $("#l_pword").val();
 
                 Parse.User.logIn(uname, pass, {
                     success: function (user) {
@@ -82,6 +82,26 @@
                         alert("ERROR " + error.code + " " + error.message);
                     }
                 });
+            }
+        });
+
+        $("#resetPassword").click(function () {
+            var uname = $("#l_uname").val();
+
+            if (uname && uname !== "") {
+                Parse.User.requestPasswordReset(uname, {
+                    success: function () {
+                        // Password reset request was sent successfully
+                        alert("Please check your email for password reset instructions.")
+                    },
+                    error: function (error) {
+                        // Show the error message somewhere
+                        alert("Error: " + error.code + " " + error.message);
+                    }
+                });
+            }
+            else {
+                alert("Please Enter Email, then Try Resetting Again");
             }
         });
     }
