@@ -21,9 +21,7 @@
             ],
             $loginReg = $("#loginReg"),
             $loginBtn = $loginReg.find("#login > .button"),
-            $regBtn = $loginReg.find("#register > .button"),
-            PoolPlayGame = Parse.Object.extend("PoolPlayGame"),
-            PrequartersTeam = Parse.Object.extend("Post"),
+            $regBtn = $loginReg.find("#register > .button");
 
         $loginBtn.on({
             click: function () {
