@@ -35,7 +35,7 @@
         </tr>
     </table>
 </div>
-<div id="preq">
+<div id="preq" class="checks">
     <h2>PreQuarters: Pick 8</h2>
     <table>
         <tr>
@@ -50,4 +50,45 @@
             {{/each}}
         </tr>
     </table>
+</div>
+<div id="quart" class="checks">
+    <h2>Quarters: Pick 8</h2>
+    <table>
+        <tr>
+            {{#each pools}}
+                <td>
+                    <table>
+                        {{#each pool}}
+                            <tr><td><input type="checkbox" value="{{key}}"/><span class="checkTitle">{{this}}</td></tr>
+                        {{/each}}
+                    </table>
+                </td>
+            {{/each}}
+        </tr>
+    </table>
+</div>
+<div id="semis" class="checks">
+    <h2>Semis: Pick 4</h2>
+    <table>
+        <tr>
+            {{#each pools}}
+                <td>
+                    <table>
+                        {{#each pool}}
+                            <tr><td><input type="checkbox" value="{{key}}"/><span class="checkTitle">{{this}}</td></tr>
+                        {{/each}}
+                    </table>
+                </td>
+            {{/each}}
+        </tr>
+    </table>
+</div>
+<div id="winner">
+    <select>
+      {{#each pools}}
+          {{#each pool}}
+              <option value="{{key}}">{{this}}</option>
+          {{/each}}
+      {{/each}}
+    </select>
 </div>

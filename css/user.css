@@ -65,12 +65,12 @@
     padding: 10px 0;
 }
 
-#preq {
+.checks {
     width: 700px;
     margin: 100px auto 0 auto;
     font-size: 18px;
 }
 
-#preq > table {
+.checks > table {
     width: 100%;
 }
