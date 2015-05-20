@@ -33,19 +33,20 @@
                 { label: "Pool C", pool: ["UNC (3)", "Florida State (6)", "Maryland (10)", "Oregon (15)", "Illinois (19)"] },
                 { label: "Pool D", pool: ["UNCW (4)", "Colorado (5)", "UMass (9)", "UCSB (13)", "Cornell (20)"] }
             ],
-            loadPPGames = function () {
-
-            },
+            poolToIdx = {
+                A: 0,
+                B: 1,
+                C: 2,
+                D: 3
+            };
             contentMap = {
                 profile: function () {
-                    var matchups = [];
-
                     if (!currentUser.get("hasMatchups")) {
                         var plen = pools.length,
                             i;
 
                         for (i = 0; i < plen; i++) {
-                            createMatchups(currentUser, pools[i].pool, PoolPlayGame, loadPPGames, i === plen - 1);
+                            createMatchups(currentUser, pools[i].pool, pools[i].label.slice(-1), PoolPlayGame);
                         }
                     }
 
@@ -55,16 +56,28 @@
                     ppQuery.equalTo("user", currentUser);
                     ppQuery.find({
                         success: function(userPPGames) {
-                            matchups = $.map(userPPGames, function (game) {
-                                return {
-                                    key: game.id,
-                                    t1: game.get("t1"),
-                                    t2: game.get("t2"),
-                                    t1Selected: game.get("t1Selected"),
-                                    t2Selected: game.get("t2Selected"),
+                            var matchups = [],
+                                glen = userPPGames.length,
+                                i, g,
+                                pool;
+
+                            for (i = 0; i < glen; i++) {
+                                g = userPPGames[i];
+                                pool = poolToIdx[g.get("pool")];
+
+                                if (!matchups[pool]) {
+                                    matchups[pool] = [];
                                 }
-                            });
-                            console.log(matchups);
+
+                                matchups[pool].push({
+                                    key: g.id,
+                                    t1: g.get("t1"),
+                                    t2: g.get("t2"),
+                                    t1Selected: g.get("t1Selected"),
+                                    t2Selected: g.get("t2Selected"),
+                                });
+                            }
+
                             $.ajax({
                                 url: "../html/tpl/profile.tpl",
                                 success: function (data) {
@@ -116,7 +129,7 @@
 
 }(jQuery));
 
-function createMatchups(user, pool, ParsePPGame) {
+function createMatchups(user, pool, poolKey, ParsePPGame) {
     var plen = pool.length,
         i, j,
         ParseGame;
@@ -127,6 +140,7 @@ function createMatchups(user, pool, ParsePPGame) {
             ParseGame = new ParsePPGame();
             ParseGame.save({
                 user: user,
+                pool: poolKey,
                 t1: pool[i],
                 t2: pool[j],
                 t1Selected: false,
