@@ -38,62 +38,51 @@
             },
             contentMap = {
                 profile: function () {
-                    currentUser.fetch({
-                        success: function () {
-                            var matchups = [];
+                    var matchups = [];
 
-                            if (!currentUser.attributes.hasMatchups) {
-                                var plen = pools.length,
-                                    i,
-                                    createdMatchups = currentUser.get("createdPPGames");
+                    if (!currentUser.get("hasMatchups")) {
+                        var plen = pools.length,
+                            i,
+                            createdMatchups = currentUser.get("createdPPGames");
 
-                                for (i = 0; i < plen; i++) {
-                                    createMatchups(currentUser, pools[i].pool, PoolPlayGame, loadPPGames, i === plen - 1);
+                        for (i = 0; i < plen; i++) {
+                            createMatchups(currentUser, pools[i].pool, PoolPlayGame, loadPPGames, i === plen - 1);
+                        }
+
+                        console.log(createdMatchups);
+                    }
+
+                    //load from Parse
+                    var ppQuery = new Parse.Query(PoolPlayGame);
+
+                    ppQuery.equalTo("user", currentUser);
+                    ppQuery.find({
+                        success: function(userPPGames) {
+                            console.log(userPPGames);
+                            matchups = $.map(userPPGames, function (game) {
+                                return {
+                                    key: game.id,
+                                    t1: game.get("t1"),
+                                    t2: game.get("t2"),
+                                    t1Selected: game.get("t1Selected"),
+                                    t2Selected: game.get("t2Selected"),
                                 }
+                            });
 
-                                /*while (createdMatchups < 10) {
-                                    currentUser.fetch({
-                                        success: function () {
-                                            createdMatchups = currentUser.get("createdPPGames");
-                                        }
-                                    });
-                                }*/
-                                console.log(createdMatchups);
-                            }
+                            $.ajax({
+                                url: "../html/tpl/profile.tpl",
+                                success: function (data) {
+                                    var template = Handlebars.compile(data);
 
-                            //load from Parse
-                            var ppQuery = new Parse.Query(PoolPlayGame);
+                                    $("#content").html(template({
+                                        pools: pools,
+                                        ppGames: matchups
+                                    }));
 
-                            ppQuery.equalTo("user", currentUser);
-                            ppQuery.find({
-                                success: function(userPPGames) {
-                                    console.log(userPPGames);
-                                    matchups = $.map(userPPGames, function (game) {
-                                        return {
-                                            key: game.id,
-                                            t1: game.get("t1"),
-                                            t2: game.get("t2"),
-                                            t1Selected: game.get("t1Selected"),
-                                            t2Selected: game.get("t2Selected"),
-                                        }
-                                    });
-
-                                    $.ajax({
-                                        url: "../html/tpl/profile.tpl",
-                                        success: function (data) {
-                                            var template = Handlebars.compile(data);
-
-                                            $("#content").html(template({
-                                                pools: pools,
-                                                ppGames: matchups
-                                            }));
-
-                                            $(".ppGame").click(function () {
-                                                $(this).siblings(".selected").removeClass("selected");
-                                                $(this).addClass("selected");
-                                                //TODO: SAVE THIS CHOICE TO PARSE
-                                            });
-                                        }
+                                    $(".ppGame").click(function () {
+                                        $(this).siblings(".selected").removeClass("selected");
+                                        $(this).addClass("selected");
+                                        //TODO: SAVE THIS CHOICE TO PARSE
                                     });
                                 }
                             });
