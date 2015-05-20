@@ -420,7 +420,7 @@ function createCheckBoxes(user, pools, ParsePreQ, ParseQ, ParseSemi, ParseFinal)
             pq = new ParsePreQ();
             q = new ParseQ();
             s = new ParseSemi();
-            f = new ParseFinal()
+            f = new ParseFinal();
 
             pq.save({
                 user: user,
