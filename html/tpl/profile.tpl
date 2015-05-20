@@ -102,7 +102,7 @@
 <div id="winner" class="checks">
     <h2>Pick Your Winner</h2>
     <select>
-      {{#each teams}}
+      {{#each list}}
           <option value="{{this}}">{{this}}</option>
       {{/each}}
     </select>

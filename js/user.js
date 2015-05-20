@@ -310,7 +310,7 @@
                                                                         });
                                                                     });
 
-                                                                    ("#finals input:checkbox").change(function () {
+                                                                    $("#finals input:checkbox").change(function () {
                                                                         var $self = $(this),
                                                                             that = this;
 
