@@ -44,7 +44,6 @@
                     user.set("password", pass);
                     user.set("name", name);
                     user.set("hasMatchups", false);
-                    user.set("createdPPGames", 0);
 
                     user.signUp(null, {
                         success: function (user) {

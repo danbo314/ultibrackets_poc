@@ -42,14 +42,11 @@
 
                     if (!currentUser.get("hasMatchups")) {
                         var plen = pools.length,
-                            i,
-                            createdMatchups = currentUser.get("createdPPGames");
+                            i;
 
                         for (i = 0; i < plen; i++) {
                             createMatchups(currentUser, pools[i].pool, PoolPlayGame, loadPPGames, i === plen - 1);
                         }
-
-                        console.log(createdMatchups);
                     }
 
                     //load from Parse
@@ -58,7 +55,6 @@
                     ppQuery.equalTo("user", currentUser);
                     ppQuery.find({
                         success: function(userPPGames) {
-                            console.log(userPPGames);
                             matchups = $.map(userPPGames, function (game) {
                                 return {
                                     key: game.id,
@@ -68,7 +64,7 @@
                                     t2Selected: game.get("t2Selected"),
                                 }
                             });
-
+                            console.log(matchups);
                             $.ajax({
                                 url: "../html/tpl/profile.tpl",
                                 success: function (data) {
@@ -136,10 +132,7 @@ function createMatchups(user, pool, ParsePPGame) {
                 t1Selected: false,
                 t2Selected: false
             }, {
-                success: function () {
-                    user.increment("createdPPGames");
-                    user.save();
-                }
+                success: function () {}
             });
         }
     }
