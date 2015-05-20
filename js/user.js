@@ -316,8 +316,8 @@
 
                                                                         fObjQuery = new Parse.Query(Final);
                                                                         fObjQuery.get($self.attr("id"), {
-                                                                            success: function(semiGame) {
-                                                                                semiGame.save({
+                                                                            success: function(finalGame) {
+                                                                                finalGame.save({
                                                                                     selected: that.checked
                                                                                 }, {
                                                                                     success: function () {

@@ -59,7 +59,7 @@
                 <td>
                     <table>
                         {{#each this}}
-                            <tr><td><input type="checkbox" id="{{key}}{{#if checked}} checked{{/if}}"/><span class="checkTitle">{{name}}</td></tr>
+                            <tr><td><input type="checkbox" id="{{key}}"{{#if checked}} checked{{/if}}/><span class="checkTitle">{{name}}</td></tr>
                         {{/each}}
                     </table>
                 </td>
@@ -75,7 +75,7 @@
                 <td>
                     <table>
                         {{#each this}}
-                            <tr><td><input type="checkbox" id="{{key}}{{#if checked}} checked{{/if}}"/><span class="checkTitle">{{name}}</td></tr>
+                            <tr><td><input type="checkbox" id="{{key}}"{{#if checked}} checked{{/if}}/><span class="checkTitle">{{name}}</td></tr>
                         {{/each}}
                     </table>
                 </td>
@@ -91,7 +91,7 @@
                 <td>
                     <table>
                         {{#each this}}
-                            <tr><td><input type="checkbox" id="{{key}}{{#if checked}} checked{{/if}}"/><span class="checkTitle">{{name}}</td></tr>
+                            <tr><td><input type="checkbox" id="{{key}}"{{#if checked}} checked{{/if}}/><span class="checkTitle">{{name}}</td></tr>
                         {{/each}}
                     </table>
                 </td>
