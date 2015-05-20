@@ -39,11 +39,11 @@
     <h2>PreQuarters: Pick 8</h2>
     <table>
         <tr>
-            {{#each pools}}
+            {{#each prequarters}}
                 <td>
                     <table>
-                        {{#each pool}}
-                            <tr><td><input type="checkbox"/><span class="checkTitle">{{this}}</td></tr>
+                        {{#each this}}
+                            <tr><td><input type="checkbox" id="{{key}}"{{#if checked}} checked{{/if}}/><span class="checkTitle">{{name}}</td></tr>
                         {{/each}}
                     </table>
                 </td>
@@ -55,11 +55,11 @@
     <h2>Quarters: Pick 8</h2>
     <table>
         <tr>
-            {{#each pools}}
+            {{#each quarters}}
                 <td>
                     <table>
-                        {{#each pool}}
-                            <tr><td><input type="checkbox" value="{{key}}"/><span class="checkTitle">{{this}}</td></tr>
+                        {{#each this}}
+                            <tr><td><input type="checkbox" id="{{key}}{{#if checked}} checked{{/if}}"/><span class="checkTitle">{{name}}</td></tr>
                         {{/each}}
                     </table>
                 </td>
@@ -71,11 +71,11 @@
     <h2>Semis: Pick 4</h2>
     <table>
         <tr>
-            {{#each pools}}
+            {{#each semis}}
                 <td>
                     <table>
-                        {{#each pool}}
-                            <tr><td><input type="checkbox" value="{{key}}"/><span class="checkTitle">{{this}}</td></tr>
+                        {{#each this}}
+                            <tr><td><input type="checkbox" id="{{key}}{{#if checked}} checked{{/if}}"/><span class="checkTitle">{{name}}</td></tr>
                         {{/each}}
                     </table>
                 </td>
@@ -88,7 +88,7 @@
     <select>
       {{#each pools}}
           {{#each pool}}
-              <option value="{{key}}">{{this}}</option>
+              <option value="{{key}}">{{name}}</option>
           {{/each}}
       {{/each}}
     </select>

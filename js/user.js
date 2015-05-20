@@ -49,19 +49,24 @@
                             createMatchups(currentUser, pools[i].pool, pools[i].label.slice(-1), PoolPlayGame);
                         }
 
+                        createCheckBoxes(currentUser, pools, Prequarter, Quarter, Semi);
+
                         currentUser.save({
                            hasMatchups: true
                         });
                     }
 
                     //load from Parse
-                    var ppQuery = new Parse.Query(PoolPlayGame);
+                    var ppQuery = new Parse.Query(PoolPlayGame),
+                        ppMatches = [],
+                        preqs = [],
+                        qs = [],
+                        ss = [];
 
                     ppQuery.equalTo("user", currentUser);
                     ppQuery.find({
                         success: function(userPPGames) {
-                            var matchups = [],
-                                glen = userPPGames.length,
+                            var glen = userPPGames.length,
                                 i, g,
                                 pool;
 
@@ -69,11 +74,11 @@
                                 g = userPPGames[i];
                                 pool = poolToIdx[g.get("pool")];
 
-                                if (!matchups[pool]) {
-                                    matchups[pool] = [];
+                                if (!ppMatches[pool]) {
+                                    ppMatches[pool] = [];
                                 }
 
-                                matchups[pool].push({
+                                ppMatches[pool].push({
                                     key: g.id,
                                     t1: g.get("t1"),
                                     t2: g.get("t2"),
@@ -82,49 +87,202 @@
                                 });
                             }
 
-                            $.ajax({
-                                url: "../html/tpl/profile.tpl",
-                                success: function (data) {
-                                    var template = Handlebars.compile(data),
-                                        ppGQuery;
+                            var preQQuery = new Parse.Query(Prequarter);
 
-                                    $("#content").html(template({
-                                        pools: pools,
-                                        ppGames: matchups
-                                    }));
+                            preQQuery.equalTo("user", currentUser);
+                            preQQuery.find({
+                                success: function (userPreQs) {
+                                    var pqlen = userPreQs.length,
+                                        pq;
 
-                                    $(".ppGame").click(function () {
-                                        var $self = $(this);
+                                    for (i = 0; i < pqlen; i++) {
+                                        pq = userPreQs[i];
+                                        pool = poolToIdx[g.get("pool")];
 
-                                        $self.siblings(".selected").removeClass("selected");
-                                        $self.addClass("selected");
-
-                                        var fieldT,
-                                            fieldF;
-
-                                        if ($self.hasClass("t1")) {
-                                            fieldT = "t1Selected";
-                                            fieldF = "t2Selected";
-                                        }
-                                        else {
-                                            fieldT = "t2Selected";
-                                            fieldF = "t1Selected";
+                                        if (!preqs[pool]) {
+                                            preqs[pool] = [];
                                         }
 
-                                        // Save to Parse
-                                        ppGQuery = new Parse.Query(PoolPlayGame);
-                                        ppGQuery.get($self.parent().attr("id"), {
-                                            success: function(ppGame) {
-                                                // The object was retrieved successfully.
-                                                ppGame.set(fieldT, true);
-                                                ppGame.set(fieldF, false);
-                                                ppGame.save();
-                                            },
-                                            error: function () {
-                                                console.log("could not find game");
+                                        preqs[pool].push({
+                                            key: pq.id,
+                                            name: pq.get("name"),
+                                            checked: pq.get("selected")
+                                        });
+                                    }
+
+                                    var qQuery = new Parse.Query(Quarter);
+
+                                    qQuery.equalTo("user", currentUser);
+                                    qQuery.find({
+                                        success: function (userQs) {
+                                            var qlen = userQs.length,
+                                                q;
+
+                                            for (i = 0; i < qlen; i++) {
+                                                q = userQs[i];
+                                                pool = poolToIdx[g.get("pool")];
+
+                                                if (!qs[pool]) {
+                                                    qs[pool] = [];
+                                                }
+
+                                                qs[pool].push({
+                                                    key: q.id,
+                                                    name: q.get("name"),
+                                                    checked: q.get("selected")
+                                                });
                                             }
 
-                                        });
+                                            var sQuery = new Parse.Query(Semi);
+
+                                            sQuery.equalTo("user", currentUser);
+                                            sQuery.find({
+                                                success: function (userSs) {
+                                                    var slen = userss.length,
+                                                        s;
+
+                                                    for (i = 0; i < slen; i++) {
+                                                        s = userSs[i];
+                                                        pool = poolToIdx[g.get("pool")];
+
+                                                        if (!ss[pool]) {
+                                                            ss[pool] = [];
+                                                        }
+
+                                                        ss[pool].push({
+                                                            key: q.id,
+                                                            name: q.get("name"),
+                                                            checked: q.get("selected")
+                                                        });
+                                                    }
+
+                                                    $.ajax({
+                                                        url: "../html/tpl/profile.tpl",
+                                                        success: function (data) {
+                                                            var template = Handlebars.compile(data),
+                                                                ppGQuery,
+                                                                preqObjQuery,
+                                                                qObjQuery,
+                                                                sObjQuery;
+
+                                                            $("#content").html(template({
+                                                                pools: pools,
+                                                                ppGames: ppMatches,
+                                                                prequarters: preqs,
+                                                                quarters: qs,
+                                                                semis: ss
+                                                            }));
+
+                                                            $(".ppGame").click(function () {
+                                                                var $self = $(this);
+
+                                                                $self.siblings(".selected").removeClass("selected");
+                                                                $self.addClass("selected");
+
+                                                                var fieldT,
+                                                                    fieldF;
+
+                                                                if ($self.hasClass("t1")) {
+                                                                    fieldT = "t1Selected";
+                                                                    fieldF = "t2Selected";
+                                                                }
+                                                                else {
+                                                                    fieldT = "t2Selected";
+                                                                    fieldF = "t1Selected";
+                                                                }
+
+                                                                // Save to Parse
+                                                                ppGQuery = new Parse.Query(PoolPlayGame);
+                                                                ppGQuery.get($self.parent().attr("id"), {
+                                                                    success: function(ppGame) {
+                                                                        // The object was retrieved successfully.
+                                                                        ppGame.set(fieldT, true);
+                                                                        ppGame.set(fieldF, false);
+                                                                        ppGame.save();
+                                                                    },
+                                                                    error: function () {
+                                                                        console.log("could not find game");
+                                                                    }
+
+                                                                });
+                                                            });
+
+                                                            $("#preq input:checkbox").change(function () {
+                                                                var $self = $(this),
+                                                                    that = this;
+
+                                                                preqObjQuery = new Parse.Query(Prequarter);
+                                                                preqObjQuery.get($self.parent().attr("id"), {
+                                                                    success: function(preqGame) {
+                                                                        preqGame.save({
+                                                                            selected: that.checked
+                                                                        }, {
+                                                                            success: function () {
+                                                                                if ($("#preq input:checked").length === 8) {
+                                                                                    $("#preq input:not(:checked)").attr("disabled", true);
+                                                                                }
+                                                                                else {
+                                                                                    $("#preq input:disabled").removeAttr("disabled");
+                                                                                }
+                                                                            }
+                                                                        });
+                                                                    }
+
+                                                                });
+                                                            });
+
+                                                            $("#quart input:checkbox").change(function () {
+                                                                var $self = $(this),
+                                                                    that = this;
+
+                                                                qObjQuery = new Parse.Query(Quarter);
+                                                                qObjQuery.get($self.parent().attr("id"), {
+                                                                    success: function(quartGame) {
+                                                                        quartGame.save({
+                                                                            selected: that.checked
+                                                                        }, {
+                                                                            success: function () {
+                                                                                if ($("#quart input:checked").length === 8) {
+                                                                                    $("#quart input:not(:checked)").attr("disabled", true);
+                                                                                }
+                                                                                else {
+                                                                                    $("#quart input:disabled").removeAttr("disabled");
+                                                                                }
+                                                                            }
+                                                                        });
+                                                                    }
+
+                                                                });
+                                                            });
+
+                                                            $("#semies input:checkbox").change(function () {
+                                                                var $self = $(this),
+                                                                    that = this;
+
+                                                                sObjQuery = new Parse.Query(Semi);
+                                                                sObjQuery.get($self.parent().attr("id"), {
+                                                                    success: function(semiGame) {
+                                                                        semiGame.save({
+                                                                            selected: that.checked
+                                                                        }, {
+                                                                            success: function () {
+                                                                                if ($("#semies input:checked").length === 8) {
+                                                                                    $("#semies input:not(:checked)").attr("disabled", true);
+                                                                                }
+                                                                                else {
+                                                                                    $("#semies input:disabled").removeAttr("disabled");
+                                                                                }
+                                                                            }
+                                                                        });
+                                                                    }
+
+                                                                });
+                                                            });
+                                                        }
+                                                    });
+                                                }
+                                            });
+                                        }
                                     });
                                 }
                             });
@@ -180,6 +338,49 @@ function createMatchups(user, pool, poolKey, ParsePPGame) {
                 t2Selected: false
             }, {
                 success: function () {}
+            });
+        }
+    }
+}
+
+function createCheckBoxes(user, pools, ParsePreQ, ParseQ, ParseSemi) {
+    var i, j,
+        plen = pools.length,
+        pplen,
+        pool,
+        team,
+        pq, q, s;
+
+    for (i = 0; i < plen; i++) {
+        pool = pools[i];
+        pplen = pool.pool.length;
+
+        for (j = 0; j < pplen; j++) {
+            team = pool.pool[j];
+
+            pq = new ParsePreQ();
+            q = new ParseQ();
+            s = new ParseSemi();
+
+            pq.save({
+                user: user,
+                pool: pool.label.splice(-1),
+                name: team,
+                selected: false
+            });
+
+            q.save({
+                user: user,
+                pool: pool.label.splice(-1),
+                name: team,
+                selected: false
+            });
+
+            s.save({
+                user: user,
+                pool: pool.label.splice(-1),
+                name: team,
+                selected: false
             });
         }
     }
