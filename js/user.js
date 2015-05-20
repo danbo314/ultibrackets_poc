@@ -9,7 +9,12 @@
     var currentUser = Parse.User.current();
 
     if (currentUser) {
-        var initDOMHandlers = function () {
+        var PoolPlayGame = Parse.Object.extend("PoolPlayGame"),
+            Prequarter = Parse.Object.extend("Prequarter"),
+            Quarter = Parse.Object.extend("Quarter"),
+            Semi = Parse.Object.extend("Semi"),
+            Winner = Parse.Object.extend("Winner"),
+            initDOMHandlers = function () {
                 $("#logout").click(function() {
                     Parse.User.logOut();
                     window.location.href = "../index.html";
@@ -28,33 +33,68 @@
                 { label: "Pool C", pool: ["UNC (3)", "Florida State (6)", "Maryland (10)", "Oregon (15)", "Illinois (19)"] },
                 { label: "Pool D", pool: ["UNCW (4)", "Colorado (5)", "UMass (9)", "UCSB (13)", "Cornell (20)"] }
             ],
+            loadPPGames = function () {
+
+            },
             contentMap = {
                 profile: function () {
-                    var matchups = [],
-                        plen = pools.length,
-                        i,
-                        matchMap;
+                    currentUser.fetch({
+                        success: function () {
+                            var matchups = [];
 
-                    for (i = 0; i < plen; i++) {
-                        matchMap = getMatchups(pools[i].pool, pools[i].label.slice(-1));
-                        //TODO: CHECK MAP AGAINST RETURN FROM PARSE DATA STORAGE HERE
-                        matchups.push(convertMatchups(matchMap));
-                    }
+                            if (!currentUser.attributes.hasMatchups) {
+                                var plen = pools.length,
+                                    i,
+                                    createdMatchups = currentUser.get("createdPPGames");
 
-                    $.ajax({
-                        url: "../html/tpl/profile.tpl",
-                        success: function (data) {
-                            var template = Handlebars.compile(data);
+                                for (i = 0; i < plen; i++) {
+                                    createMatchups(currentUser, pools[i].pool, PoolPlayGame, loadPPGames, i === plen - 1);
+                                }
 
-                            $("#content").html(template({
-                                pools: pools,
-                                ppGames: matchups
-                            }));
+                                while (createdMatchups < 10) {
+                                    currentUser.fetch({
+                                        success: function () {
+                                            createdMatchups = currentUser.get("createdPPGames");
+                                        }
+                                    });
+                                }
+                            }
 
-                            $(".ppGame").click(function () {
-                                $(this).siblings(".selected").removeClass("selected");
-                                $(this).addClass("selected");
-                                //TODO: SAVE THIS CHOICE TO PARSE
+                            //load from Parse
+                            var ppQuery = new Parse.Query(PoolPlayGame);
+
+                            ppQuery.equalTo("user", currentUser);
+                            ppQuery.find({
+                                success: function(userPPGames) {
+                                    console.log(userPPGames);
+                                    matchups = $.map(userPPGames, function (game) {
+                                        return {
+                                            key: game.id,
+                                            t1: game.get("t1"),
+                                            t2: game.get("t2"),
+                                            t1Selected: game.get("t1Selected"),
+                                            t2Selected: game.get("t2Selected"),
+                                        }
+                                    });
+
+                                    $.ajax({
+                                        url: "../html/tpl/profile.tpl",
+                                        success: function (data) {
+                                            var template = Handlebars.compile(data);
+
+                                            $("#content").html(template({
+                                                pools: pools,
+                                                ppGames: matchups
+                                            }));
+
+                                            $(".ppGame").click(function () {
+                                                $(this).siblings(".selected").removeClass("selected");
+                                                $(this).addClass("selected");
+                                                //TODO: SAVE THIS CHOICE TO PARSE
+                                            });
+                                        }
+                                    });
+                                }
                             });
                         }
                     });
@@ -90,34 +130,27 @@
 
 }(jQuery));
 
-function getMatchups(pool, pool_key) {
+function createMatchups(user, pool, ParsePPGame) {
     var plen = pool.length,
-        i, j, k = 1,
-        matchups = {},
-        key;
+        i, j,
+        ParseGame;
 
     for (i = 0; i < plen; i++) {
         for (j = i+1; j < plen; j++) {
-            key = pool_key+"_"+k;
-            matchups[key] = {
-                key: key,
+            //create new Parse object
+            ParseGame = new ParsePPGame();
+            ParseGame.save({
+                user: user,
                 t1: pool[i],
-                t2: pool[j]
-            };
-            k++;
+                t2: pool[j],
+                t1Selected: false,
+                t2Selected: false
+            }, {
+                success: function () {
+                    user.increment("createdPPGames");
+                    user.save();
+                }
+            });
         }
     }
-
-    return matchups;
-}
-
-function convertMatchups(matchups) {
-    var temp = [],
-        key;
-
-    for (key in matchups) {
-        temp.push(matchups[key]);
-    }
-
-    return temp;
 }

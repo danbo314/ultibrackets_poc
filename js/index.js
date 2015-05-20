@@ -13,13 +13,7 @@
         window.location.href = "html/user.html";
     }
     else {
-        var pools = [
-                ["Pittsburgh (1)", "Georgia (8)", "Wisconsin (12)", "Texas (13)", "Auburn (17)"],
-                ["Texas A&M (2)", "Central Florida (7)", "Minnesota (11)", "Western Washington (14)", "Cincinnati (18)"],
-                ["North Carolina (3)", "Florida State (6)", "Maryland (10)", "Oregon (15)", "Illinois (19)"],
-                ["North Carolina-Wilmington (4)", "Colorado (5)", "Massachusetts (9)", "California-Santa Barbara (13)", "Cornell (20)"]
-            ],
-            $loginReg = $("#loginReg"),
+        var $loginReg = $("#loginReg"),
             $loginBtn = $loginReg.find("#login > .button"),
             $regBtn = $loginReg.find("#register > .button");
 
@@ -49,6 +43,8 @@
                     user.set("username", uname);
                     user.set("password", pass);
                     user.set("name", name);
+                    user.set("hasMatchups", false);
+                    user.set("createdPPGames", 0);
 
                     user.signUp(null, {
                         success: function (user) {
