@@ -81,7 +81,8 @@
                             $.ajax({
                                 url: "../html/tpl/profile.tpl",
                                 success: function (data) {
-                                    var template = Handlebars.compile(data);
+                                    var template = Handlebars.compile(data),
+                                        ppGQuery;
 
                                     $("#content").html(template({
                                         pools: pools,
@@ -89,9 +90,37 @@
                                     }));
 
                                     $(".ppGame").click(function () {
-                                        $(this).siblings(".selected").removeClass("selected");
-                                        $(this).addClass("selected");
-                                        //TODO: SAVE THIS CHOICE TO PARSE
+                                        var $self = $(this);
+
+                                        $self.siblings(".selected").removeClass("selected");
+                                        $self.addClass("selected");
+
+                                        var fieldT,
+                                            fieldF;
+
+                                        if ($self.hasClass("t1")) {
+                                            fieldT = "t1Selected";
+                                            fieldF = "t2Selected";
+                                        }
+                                        else {
+                                            fieldT = "t2Selected";
+                                            fieldF = "t1Selected";
+                                        }
+
+                                        // Save to Parse
+                                        ppGQuery = new Parse.Query(PoolPlayGame);
+                                        ppGQuery.get($self.parent().attr("id"), {
+                                            success: function(ppGame) {
+                                                // The object was retrieved successfully.
+                                                ppGame.set(fieldT, true);
+                                                ppGame.set(fieldF, false);
+                                                ppGame.save();
+                                            },
+                                            error: function () {
+                                                console.log("could not find game");
+                                            }
+
+                                        });
                                     });
                                 }
                             });
@@ -99,7 +128,7 @@
                     });
                 },
                 leaderboard: function () {
-
+                    $("#content").empty();
                 }
             },
             showContent = function () {
