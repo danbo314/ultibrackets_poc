@@ -97,7 +97,7 @@
 
                                     for (i = 0; i < pqlen; i++) {
                                         pq = userPreQs[i];
-                                        pool = poolToIdx[g.get("pool")];
+                                        pool = poolToIdx[pq.get("pool")];
 
                                         if (!preqs[pool]) {
                                             preqs[pool] = [];
@@ -120,7 +120,7 @@
 
                                             for (i = 0; i < qlen; i++) {
                                                 q = userQs[i];
-                                                pool = poolToIdx[g.get("pool")];
+                                                pool = poolToIdx[q.get("pool")];
 
                                                 if (!qs[pool]) {
                                                     qs[pool] = [];
@@ -143,16 +143,16 @@
 
                                                     for (i = 0; i < slen; i++) {
                                                         s = userSs[i];
-                                                        pool = poolToIdx[g.get("pool")];
+                                                        pool = poolToIdx[s.get("pool")];
 
                                                         if (!ss[pool]) {
                                                             ss[pool] = [];
                                                         }
 
                                                         ss[pool].push({
-                                                            key: q.id,
-                                                            name: q.get("name"),
-                                                            checked: q.get("selected")
+                                                            key: s.id,
+                                                            name: s.get("name"),
+                                                            checked: s.get("selected")
                                                         });
                                                     }
 
@@ -164,12 +164,6 @@
                                                                 preqObjQuery,
                                                                 qObjQuery,
                                                                 sObjQuery;
-
-                                                            console.log(pools);
-                                                            console.log(ppMatches);
-                                                            console.log(preqs);
-                                                            console.log(qs);
-                                                            console.log(ss);
 
                                                             $("#content").html(template({
                                                                 pools: pools,
