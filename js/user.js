@@ -48,6 +48,10 @@
                         for (i = 0; i < plen; i++) {
                             createMatchups(currentUser, pools[i].pool, pools[i].label.slice(-1), PoolPlayGame);
                         }
+
+                        currentUser.save({
+                           hasMatchups: true
+                        });
                     }
 
                     //load from Parse
