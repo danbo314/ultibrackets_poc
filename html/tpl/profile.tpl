@@ -43,7 +43,7 @@
                 <td>
                     <table>
                         {{#each pool}}
-                            <tr><td><input type="checkbox/><span class="checkTitle">{{this}}</td></tr>
+                            <tr><td><input type="checkbox"/><span class="checkTitle">{{this}}</td></tr>
                         {{/each}}
                     </table>
                 </td>
