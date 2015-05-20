@@ -364,21 +364,21 @@ function createCheckBoxes(user, pools, ParsePreQ, ParseQ, ParseSemi) {
 
             pq.save({
                 user: user,
-                pool: pool.label.splice(-1),
+                pool: pool.label.slice(-1),
                 name: team,
                 selected: false
             });
 
             q.save({
                 user: user,
-                pool: pool.label.splice(-1),
+                pool: pool.label.slice(-1),
                 name: team,
                 selected: false
             });
 
             s.save({
                 user: user,
-                pool: pool.label.splice(-1),
+                pool: pool.label.slice(-1),
                 name: team,
                 selected: false
             });
