@@ -165,6 +165,12 @@
                                                                 qObjQuery,
                                                                 sObjQuery;
 
+                                                            console.log(pools);
+                                                            console.log(ppMatches);
+                                                            console.log(preqs);
+                                                            console.log(qs);
+                                                            console.log(ss);
+
                                                             $("#content").html(template({
                                                                 pools: pools,
                                                                 ppGames: ppMatches,
@@ -349,11 +355,13 @@ function createCheckBoxes(user, pools, ParsePreQ, ParseQ, ParseSemi) {
         pplen,
         pool,
         team,
-        pq, q, s;
+        pq, q, s,
+        pool_key;
 
     for (i = 0; i < plen; i++) {
         pool = pools[i];
         pplen = pool.pool.length;
+        pool_key = pool.label.slice(-1);
 
         for (j = 0; j < pplen; j++) {
             team = pool.pool[j];
@@ -364,21 +372,21 @@ function createCheckBoxes(user, pools, ParsePreQ, ParseQ, ParseSemi) {
 
             pq.save({
                 user: user,
-                pool: pool.label.slice(-1),
+                pool: pool_key,
                 name: team,
                 selected: false
             });
 
             q.save({
                 user: user,
-                pool: pool.label.slice(-1),
+                pool: pool_key,
                 name: team,
                 selected: false
             });
 
             s.save({
                 user: user,
-                pool: pool.label.slice(-1),
+                pool: pool_key,
                 name: team,
                 selected: false
             });
