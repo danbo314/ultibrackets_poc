@@ -36,13 +36,13 @@
             ],
             teams = ["Pittsburgh (1)","Texas A&M (2)","UNC (3)","UNCW (4)","Colorado (5)","Florida State (6)","UCF (7)","Georgia (8)",
                 "UMass (9)","Maryland (10)","Minnesota (11)","Wisconsin (12)","Texas (13)","W. Washington (14)","Oregon (15)","UCSB (16)",
-                "Auburn (17)","Cincinnati (18)","Illinois (19)","Cornell (20)"];
+                "Auburn (17)","Cincinnati (18)","Illinois (19)","Cornell (20)"],
             poolToIdx = {
                 A: 0,
                 B: 1,
                 C: 2,
                 D: 3
-            };
+            },
             contentMap = {
                 profile: function () {
                     if (!currentUser.get("hasMatchups")) {
