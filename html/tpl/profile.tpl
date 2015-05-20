@@ -88,7 +88,7 @@
     <select>
       {{#each pools}}
           {{#each pool}}
-              <option value="{{key}}">{{name}}</option>
+              <option value="{{this}}">{{this}}</option>
           {{/each}}
       {{/each}}
     </select>
