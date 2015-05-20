@@ -138,7 +138,7 @@
                                             sQuery.equalTo("user", currentUser);
                                             sQuery.find({
                                                 success: function (userSs) {
-                                                    var slen = userss.length,
+                                                    var slen = userSs.length,
                                                         s;
 
                                                     for (i = 0; i < slen; i++) {
