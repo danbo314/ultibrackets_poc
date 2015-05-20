@@ -204,6 +204,19 @@
                                                                         list: teams
                                                                     }));
 
+                                                                    if ($("#preq input:checkbox:checked").length === 8) {
+                                                                        $("#preq input:checkbox:not(:checked)").attr("disabled", true);
+                                                                    }
+                                                                    if ($("#quart input:checkbox:checked").length === 8) {
+                                                                        $("#quart input:checkbox:not(:checked)").attr("disabled", true);
+                                                                    }
+                                                                    if ($("#semis input:checkbox:checked").length === 4) {
+                                                                        $("#semis input:checkbox:not(:checked)").attr("disabled", true);
+                                                                    }
+                                                                    if ($("#finals input:checkbox:checked").length === 2) {
+                                                                        $("#finals input:checkbox:not(:checked)").attr("disabled", true);
+                                                                    }
+
                                                                     $(".ppGame").click(function () {
                                                                         var $self = $(this);
 
@@ -286,7 +299,7 @@
                                                                         });
                                                                     });
 
-                                                                    $("#semies input:checkbox").change(function () {
+                                                                    $("#semis input:checkbox").change(function () {
                                                                         var $self = $(this),
                                                                             that = this;
 
@@ -297,11 +310,11 @@
                                                                                     selected: that.checked
                                                                                 }, {
                                                                                     success: function () {
-                                                                                        if ($("#semies input:checkbox:checked").length === 4) {
-                                                                                            $("#semies input:checkbox:not(:checked)").attr("disabled", true);
+                                                                                        if ($("#semis input:checkbox:checked").length === 4) {
+                                                                                            $("#semis input:checkbox:not(:checked)").attr("disabled", true);
                                                                                         }
                                                                                         else {
-                                                                                            $("#semies input:checkbox:disabled").removeAttr("disabled");
+                                                                                            $("#semis input:checkbox:disabled").removeAttr("disabled");
                                                                                         }
                                                                                     }
                                                                                 });
