@@ -200,6 +200,16 @@
                 <input type="checkbox"/><span class="checkTitle">Pitt</span><br>
                 <input type="checkbox"/><span class="checkTitle">Pitt</span><br>
             </div>
+            <div id="winner" class="checks">
+                <h2>Pick Your Winner</h2>
+                <select>
+                    {{#each pools}}
+                    {{#each pool}}
+                    <option value="{{key}}">{{this}}</option>
+                    {{/each}}
+                    {{/each}}
+                </select>
+            </div>
         </div>
     </div>
 

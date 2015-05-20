@@ -83,7 +83,8 @@
         </tr>
     </table>
 </div>
-<div id="winner">
+<div id="winner" class="checks">
+    <h2>Pick Your Winner</h2>
     <select>
       {{#each pools}}
           {{#each pool}}
