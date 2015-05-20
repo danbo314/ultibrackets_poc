@@ -51,13 +51,14 @@
                                     createMatchups(currentUser, pools[i].pool, PoolPlayGame, loadPPGames, i === plen - 1);
                                 }
 
-                                while (createdMatchups < 10) {
+                                /*while (createdMatchups < 10) {
                                     currentUser.fetch({
                                         success: function () {
                                             createdMatchups = currentUser.get("createdPPGames");
                                         }
                                     });
-                                }
+                                }*/
+                                console.log(createdMatchups);
                             }
 
                             //load from Parse
