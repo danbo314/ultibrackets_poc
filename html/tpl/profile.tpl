@@ -83,13 +83,27 @@
         </tr>
     </table>
 </div>
+<div id="finals" class="checks">
+    <h2>Finals: Pick 2</h2>
+    <table>
+        <tr>
+            {{#each finals}}
+                <td>
+                    <table>
+                        {{#each this}}
+                            <tr><td><input type="checkbox" id="{{key}}{{#if checked}} checked{{/if}}"/><span class="checkTitle">{{name}}</td></tr>
+                        {{/each}}
+                    </table>
+                </td>
+            {{/each}}
+        </tr>
+    </table>
+</div>
 <div id="winner" class="checks">
     <h2>Pick Your Winner</h2>
     <select>
-      {{#each pools}}
-          {{#each pool}}
-              <option value="{{this}}">{{this}}</option>
-          {{/each}}
+      {{#each teams}}
+          <option value="{{this}}">{{this}}</option>
       {{/each}}
     </select>
 </div>
