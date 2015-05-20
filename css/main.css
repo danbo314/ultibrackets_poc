@@ -11,6 +11,12 @@ body {
     text-rendering: optimizeLegibility;
 }
 
+h2 {
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
 #loginCreds,
 #regCreds {
     display: none;
@@ -42,12 +48,6 @@ body {
 #loginReg .button {
     width: 100px;
     margin: 0 auto;
-}
-
-#loginReg h2 {
-    text-align: center;
-    text-transform: uppercase;
-    font-weight: 600;
 }
 
 ::-webkit-input-placeholder {

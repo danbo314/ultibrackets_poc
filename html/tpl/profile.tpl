@@ -35,3 +35,19 @@
         </tr>
     </table>
 </div>
+<div id="preq">
+    <h2>PreQuarters: Pick 8</h2>
+    <table>
+        <tr>
+            {{#each pools}}
+                <td>
+                    <table>
+                        {{#each pool}}
+                            <tr><td><input type="checkbox/><span class="checkTitle">{{this}}</td></tr>
+                        {{/each}}
+                    </table>
+                </td>
+            {{/each}}
+        </tr>
+    </table>
+</div>
