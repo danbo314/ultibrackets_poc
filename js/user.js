@@ -206,19 +206,19 @@
 
                                                                     if ($("#preq input:checkbox:checked").length === 8) {
                                                                         $("#preq input:checkbox:not(:checked)").attr("disabled", true);
-                                                                        $("#preq input:checkbox:not(:checked) + span").css("opacity", .6);
+                                                                        $("#preq input:checkbox:not(:checked) + span").css("opacity",.4);
                                                                     }
                                                                     if ($("#quart input:checkbox:checked").length === 8) {
                                                                         $("#quart input:checkbox:not(:checked)").attr("disabled", true);
-                                                                        $("#quart input:checkbox:not(:checked) + span").css("opacity", .6);
+                                                                        $("#quart input:checkbox:not(:checked) + span").css("opacity",.4);
                                                                     }
                                                                     if ($("#semis input:checkbox:checked").length === 4) {
                                                                         $("#semis input:checkbox:not(:checked)").attr("disabled", true);
-                                                                        $("#semis input:checkbox:not(:checked) + span").css("opacity", .6);
+                                                                        $("#semis input:checkbox:not(:checked) + span").css("opacity",.4);
                                                                     }
                                                                     if ($("#finals input:checkbox:checked").length === 2) {
                                                                         $("#finals input:checkbox:not(:checked)").attr("disabled", true);
-                                                                        $("#finals input:checkbox:not(:checked) + span").css("opacity", .6);
+                                                                        $("#finals input:checkbox:not(:checked) + span").css("opacity",.4);
                                                                     }
 
                                                                     $(".ppGame").click(function () {
@@ -268,7 +268,7 @@
                                                                                     success: function () {
                                                                                         if ($("#preq input:checkbox:checked").length === 8) {
                                                                                             $("#preq input:checkbox:not(:checked)").attr("disabled", true);
-                                                                                            $("#preq input:checkbox:not(:checked) + span").css("opacity", .6);
+                                                                                            $("#preq input:checkbox:not(:checked) + span").css("opacity",.4);
                                                                                         }
                                                                                         else {
                                                                                             $("#preq input:checkbox:disabled + span").css("opacity", 1);
@@ -294,7 +294,7 @@
                                                                                     success: function () {
                                                                                         if ($("#quart input:checkbox:checked").length === 8) {
                                                                                             $("#quart input:checkbox:not(:checked)").attr("disabled", true);
-                                                                                            $("#quart input:checkbox:not(:checked) + span").css("opacity", .6);
+                                                                                            $("#quart input:checkbox:not(:checked) + span").css("opacity", .4);
                                                                                         }
                                                                                         else {
                                                                                             $("#quart input:checkbox:disabled + span").css("opacity", 1);
@@ -320,7 +320,7 @@
                                                                                     success: function () {
                                                                                         if ($("#semis input:checkbox:checked").length === 4) {
                                                                                             $("#semis input:checkbox:not(:checked)").attr("disabled", true);
-                                                                                            $("#semis input:checkbox:not(:checked) + span").css("opacity", .6);
+                                                                                            $("#semis input:checkbox:not(:checked) + span").css("opacity",.4);
                                                                                         }
                                                                                         else {
                                                                                             $("#semis input:checkbox:disabled + span").css("opacity", 1);
@@ -346,7 +346,7 @@
                                                                                     success: function () {
                                                                                         if ($("#finals input:checkbox:checked").length === 2) {
                                                                                             $("#finals input:checkbox:not(:checked)").attr("disabled", true);
-                                                                                            $("#finals input:checkbox:not(:checked) + span").css("opacity", .6);
+                                                                                            $("#finals input:checkbox:not(:checked) + span").css("opacity",.4);
                                                                                         }
                                                                                         else {
                                                                                             $("#finals input:checkbox:disabled + span").css("opacity", 1);
