@@ -410,13 +410,13 @@
                     $("#content").html("<img src='../img/loader.gif'/>");
                     var resultsQuery = new Parse.Query(Parse.User);
 
-                    resultsQuery.include("[PoolPlayGame.Prequarter.Quarter.Semi.Final]");
+                    resultsQuery.include("[ppGames.pqGames.qGames.sGames.fGames]");
                     resultsQuery.get("EMkJ2jvXas", {
                         success: function (results) {
-                            console.log(results.get("PoolPlayGame"));
+                            console.log(results.get("ppGames"));
                             var userQuery = new Parse.Query(Parse.User);
 
-                            userQuery.include("[PoolPlayGame.Prequarter.Quarter.Semi.Final]");
+                            userQuery.include("[ppGames.pqGames.qGames.sGames.fGames]");
                             userQuery.notEqualTo("name", "results");
                             userQuery.find({
                                 success: function (users) {
@@ -499,7 +499,8 @@
 function createMatchups(user, pool, poolKey, ParsePPGame) {
     var plen = pool.length,
         i, j,
-        ParseGame;
+        ParseGame,
+        relation = user.relation("ppGames");
 
     for (i = 0; i < plen; i++) {
         for (j = i+1; j < plen; j++) {
@@ -512,11 +513,13 @@ function createMatchups(user, pool, poolKey, ParsePPGame) {
                 t2: pool[j],
                 t1Selected: false,
                 t2Selected: false
-            }, {
-                success: function () {}
             });
+
+            relation.add(ParseGame);
         }
     }
+
+    user.save();
 }
 
 function createCheckBoxes(user, pools, ParsePreQ, ParseQ, ParseSemi, ParseFinal) {
@@ -526,7 +529,11 @@ function createCheckBoxes(user, pools, ParsePreQ, ParseQ, ParseSemi, ParseFinal)
         pool,
         team,
         pq, q, s, f,
-        pool_key;
+        pool_key,
+        pqRel = user.relation("pqGames"),
+        qRel = user.relation("qGames"),
+        sRel = user.relation("sGames"),
+        fRel = user.relation("fGames");
 
     for (i = 0; i < plen; i++) {
         pool = pools[i];
@@ -547,6 +554,7 @@ function createCheckBoxes(user, pools, ParsePreQ, ParseQ, ParseSemi, ParseFinal)
                 name: team,
                 selected: false
             });
+            pqRel.add(pq);
 
             q.save({
                 user: user,
@@ -554,6 +562,7 @@ function createCheckBoxes(user, pools, ParsePreQ, ParseQ, ParseSemi, ParseFinal)
                 name: team,
                 selected: false
             });
+            qRel.add(q);
 
             s.save({
                 user: user,
@@ -561,6 +570,7 @@ function createCheckBoxes(user, pools, ParsePreQ, ParseQ, ParseSemi, ParseFinal)
                 name: team,
                 selected: false
             });
+            sRel.add(s);
 
             f.save({
                 user: user,
@@ -568,8 +578,11 @@ function createCheckBoxes(user, pools, ParsePreQ, ParseQ, ParseSemi, ParseFinal)
                 name: team,
                 selected: false
             });
+            fRel.add(f);
         }
     }
+
+    user.save();
 }
 
 function getPoolPlayScore(user, results) {
