@@ -275,13 +275,11 @@
                                                                                 ppGame.save();
 
                                                                                 if (currentUser.get("name") === "results") {
-                                                                                    console.log("this is master");
                                                                                     var resPPGQuery = new Parse.Query(PoolPlayGame);
 
                                                                                     resPPGQuery.equalTo("ppgID", ppGame.get("ppgID"));
                                                                                     resPPGQuery.find({
                                                                                         success: function (ppGames) {
-                                                                                            console.log(ppGames);
                                                                                             var glen = ppGames.length,
                                                                                                 i,
                                                                                                 user,
@@ -294,8 +292,8 @@
                                                                                                     user = game.get("user");
                                                                                                     user.fetch({
                                                                                                         success: function (cUser) {
-                                                                                                            console.log(cUser);
                                                                                                             cUser.increment("score");
+                                                                                                            cUser.save();
                                                                                                         }
                                                                                                     });
                                                                                                 }
@@ -352,6 +350,7 @@
                                                                                                     user.fetch({
                                                                                                         success: function (cUser) {
                                                                                                             cUser.increment("score", 2);
+                                                                                                            cUser.save();
                                                                                                         }
                                                                                                     });
                                                                                                 }
@@ -404,6 +403,7 @@
                                                                                                     user.fetch({
                                                                                                         success: function (cUser) {
                                                                                                             cUser.increment("score", 3);
+                                                                                                            cUser.save();
                                                                                                         }
                                                                                                     });
                                                                                                 }
@@ -457,6 +457,7 @@
                                                                                                     user.fetch({
                                                                                                         success: function (cUser) {
                                                                                                             cUser.increment("score", 5);
+                                                                                                            cUser.save();
                                                                                                         }
                                                                                                     });
                                                                                                 }
@@ -510,6 +511,7 @@
                                                                                                     user.fetch({
                                                                                                         success: function (cUser) {
                                                                                                             cUser.increment("score", 10);
+                                                                                                            cUser.save();
                                                                                                         }
                                                                                                     });
                                                                                                 }
@@ -543,6 +545,7 @@
 
                                                                                         if (user.get("winner") === winner) {
                                                                                             user.increment("score", 15);
+                                                                                            user.save();
                                                                                         }
                                                                                     }
                                                                                 }
