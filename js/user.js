@@ -293,7 +293,10 @@
                                                                                                     user = game.get("user");
                                                                                                     user.fetch({
                                                                                                         success: function (cUser) {
-                                                                                                            Parse.Cloud.run('incrementUserScore', { userId: cUser.id, weight: 1 });
+                                                                                                            Parse.Cloud.run('incrementUserScore', { userId: cUser.id, weight: 1 }, {
+                                                                                                                success: function () {},
+                                                                                                                error: function () {}
+                                                                                                            });
                                                                                                         }
                                                                                                     });
                                                                                                 }
@@ -352,7 +355,10 @@
                                                                                                     user = game.get("user");
                                                                                                     user.fetch({
                                                                                                         success: function (cUser) {
-                                                                                                            Parse.Cloud.run('incrementUserScore', { userId: cUser.id, weight: 2 });
+                                                                                                            Parse.Cloud.run('incrementUserScore', { userId: cUser.id, weight: 2 }, {
+                                                                                                                success: function () {},
+                                                                                                                error: function () {}
+                                                                                                            });
                                                                                                         }
                                                                                                     });
                                                                                                 }
@@ -405,7 +411,10 @@
                                                                                                     user = game.get("user");
                                                                                                     user.fetch({
                                                                                                         success: function (cUser) {
-                                                                                                            Parse.Cloud.run('incrementUserScore', { userId: cUser.id, weight: 3 });
+                                                                                                            Parse.Cloud.run('incrementUserScore', { userId: cUser.id, weight: 3 }, {
+                                                                                                                success: function () {},
+                                                                                                                error: function () {}
+                                                                                                            });
                                                                                                         }
                                                                                                     });
                                                                                                 }
@@ -459,7 +468,10 @@
                                                                                                     user = game.get("user");
                                                                                                     user.fetch({
                                                                                                         success: function (cUser) {
-                                                                                                            Parse.Cloud.run('incrementUserScore', { userId: cUser.id, weight: 5 });
+                                                                                                            Parse.Cloud.run('incrementUserScore', { userId: cUser.id, weight: 5 }, {
+                                                                                                                success: function () {},
+                                                                                                                error: function () {}
+                                                                                                            });
                                                                                                         }
                                                                                                     });
                                                                                                 }
@@ -513,7 +525,10 @@
                                                                                                     user = game.get("user");
                                                                                                     user.fetch({
                                                                                                         success: function (cUser) {
-                                                                                                            Parse.Cloud.run('incrementUserScore', { userId: cUser.id, weight: 10 });
+                                                                                                            Parse.Cloud.run('incrementUserScore', { userId: cUser.id, weight: 10 }, {
+                                                                                                                success: function () {},
+                                                                                                                error: function () {}
+                                                                                                            });
                                                                                                         }
                                                                                                     });
                                                                                                 }
@@ -547,7 +562,10 @@
 
                                                                                         if (user.get("winner") === winner) {
                                                                                             console.log(user.id);
-                                                                                            Parse.Cloud.run('incrementUserScore', { userId: user.id, weight: 15 });
+                                                                                            Parse.Cloud.run('incrementUserScore', { userId: user.id, weight: 15 }, {
+                                                                                                success: function () {},
+                                                                                                error: function () {}
+                                                                                            });
                                                                                         }
                                                                                     }
                                                                                 }
