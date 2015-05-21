@@ -224,7 +224,7 @@
                                                                         quarters: qs,
                                                                         semis: ss,
                                                                         finals: fs,
-                                                                        list: list
+                                                                        list: listArr
                                                                     }));
 
                                                                     if ($("#preq input:checkbox:checked").length === 8) {
