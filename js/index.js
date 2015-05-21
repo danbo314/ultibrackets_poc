@@ -137,13 +137,14 @@ function createMatchups(user, pool, poolKey, ParsePPGame) {
             ParseGame.set("t2", pool[j]);
             ParseGame.set("t1Selected", false);
             ParseGame.set("t2Selected", false);
-            //ParseGame.save();
-            //ParseGameArray.push(ParseGame);
-            user.add("ppGames",ParseGame);
+            ParseGame.save(null, {
+                success: function (game) {
+                    user.add("ppGames", game);
+                }
+            });
         }
     }
 
-    //return ParseGameArray;
     return user;
 }
 
@@ -154,11 +155,7 @@ function createCheckBoxes(user, pools, ParsePreQ, ParseQ, ParseSemi, ParseFinal)
         pool,
         team,
         pq, q, s, f,
-        pool_key,
-        pqArray = [],
-        qArray = [],
-        sArray = [],
-        fArray = [];
+        pool_key;
 
     for (i = 0; i < plen; i++) {
         pool = pools[i];
@@ -177,40 +174,43 @@ function createCheckBoxes(user, pools, ParsePreQ, ParseQ, ParseSemi, ParseFinal)
             pq.set("pool", pool_key);
             pq.set("name", team);
             pq.set("selected", false);
-            pq.save();
-            //pqArray.push(pq);
-            user.add("pqGames", pq);
+            pq.save(null, {
+                success: function (game) {
+                    user.add("pqGames", game);
+                }
+            });
 
             q.set("user", user);
             q.set("pool", pool_key);
             q.set("name", team);
             q.set("selected", false);
-            q.save();
-            //qArray.push(q);
-            user.add("qGames", q);
+            q.save(null, {
+                success: function (game) {
+                    user.add("qGames", game);
+                }
+            });
 
             s.set("user", user);
             s.set("pool", pool_key);
             s.set("name", team);
             s.set("selected", false);
-            s.save();
-            //sArray.push(s);
-            user.add("sGames", s);
+            s.save(null, {
+                success: function (game) {
+                    user.add("sGames", game);
+                }
+            });
 
             f.set("user", user);
             f.set("pool", pool_key);
             f.set("name", team);
             f.set("selected", false);
-            f.save();
-            //fArray.push(f);
-            user.add("fGames", f);
+            f.save(null, {
+                success: function (game) {
+                    user.add("fGames", game);
+                }
+            });
         }
     }
-
-    //user.set("pqGames", pqArray);
-    //user.set("qGames", qArray);
-    //user.set("sGames", sArray);
-    //user.set("fGames", fArray);
 
     return user;
 }
