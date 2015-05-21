@@ -11,7 +11,7 @@
     });
 
     var currentUser = Parse.User.current(),
-        resultsQuery = new Parse.Query(Parse.Object),
+        resultsQuery = new Parse.Query(Parse.User),
         results;
 
     resultsQuery.equalTo("name", "results");
