@@ -34,7 +34,7 @@
                 { label: "Pool C", pool: ["UNC (3)", "Florida State (6)", "Maryland (10)", "Oregon (15)", "Illinois (19)"] },
                 { label: "Pool D", pool: ["UNCW (4)", "Colorado (5)", "UMass (9)", "UCSB (16)", "Cornell (20)"] }
             ],
-            teams = ["Pittsburgh (1)","Texas A&M (2)","UNC (3)","UNCW (4)","Colorado (5)","Florida State (6)","UCF (7)","Georgia (8)",
+            teams = ["-- Select your winner --","Pittsburgh (1)","Texas A&M (2)","UNC (3)","UNCW (4)","Colorado (5)","Florida State (6)","UCF (7)","Georgia (8)",
                 "UMass (9)","Maryland (10)","Minnesota (11)","Wisconsin (12)","Texas (13)","W. Washington (14)","Oregon (15)","UCSB (16)",
                 "Auburn (17)","Cincinnati (18)","Illinois (19)","Cornell (20)"],
             poolToIdx = {
@@ -184,6 +184,22 @@
                                                                 });
                                                             }
 
+                                                            var temp = {},
+                                                                currentWinner = currentUser.get("winner"),
+                                                                list = $.map(teams, function (team, i) {
+                                                                    if (i === 0) {
+                                                                        temp.disabled = true;
+                                                                        temp.selected = currentWinner ? false : true;
+                                                                    }
+                                                                    else {
+                                                                        temp.disabled = false;
+                                                                        temp.selected = currentWinner === team;
+                                                                    }
+                                                                    temp.val = team;
+
+                                                                    return temp;
+                                                                });
+
                                                             $.ajax({
                                                                 url: "../html/tpl/profile.tpl",
                                                                 success: function (data) {
@@ -201,7 +217,7 @@
                                                                         quarters: qs,
                                                                         semis: ss,
                                                                         finals: fs,
-                                                                        list: teams
+                                                                        list: list
                                                                     }));
 
                                                                     if ($("#preq input:checkbox:checked").length === 8) {
@@ -356,6 +372,14 @@
                                                                                 });
                                                                             }
 
+                                                                        });
+                                                                    });
+
+                                                                    $("#winner select").change(function () {
+                                                                        var $self = $(this);
+
+                                                                        currentUser.save({
+                                                                            winner: $self.find(":selected").val()
                                                                         });
                                                                     });
                                                                 }

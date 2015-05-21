@@ -102,8 +102,8 @@
 <div id="winner" class="checks">
     <h2>Pick Your Winner</h2>
     <select>
-      {{#each list}}
-          <option value="{{this}}">{{this}}</option>
-      {{/each}}
+        {{#each list}}
+            <option {{#if disabled}}disabled {{/if}}{{#if selected}}selected {{/if}}value="{{this}}">{{this}}</option>
+        {{/each}}
     </select>
 </div>
