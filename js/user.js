@@ -278,6 +278,7 @@
                                                                                     var resPPGQuery = new Parse.Query(PoolPlayGame);
 
                                                                                     resPPGQuery.equalTo("ppgID", ppGame.get("ppgID"));
+                                                                                    resPPGQuery.notEqualTo("name", "results");
                                                                                     resPPGQuery.find({
                                                                                         success: function (ppGames) {
                                                                                             var glen = ppGames.length,
@@ -332,11 +333,14 @@
                                                                                 });
 
                                                                                 if (currentUser.get("name") === "results" && that.checked) {
+                                                                                    console.log("inside check");
                                                                                     var resPQQuery = new Parse.Query(Prequarter);
 
                                                                                     resPQQuery.equalTo("name", preqGame.get("name"));
+                                                                                    resPQQuery.notEqualTo("name", "results");
                                                                                     resPQQuery.find({
                                                                                         success: function (pqGames) {
+                                                                                            console.log(pqGames);
                                                                                             var glen = pqGames.length,
                                                                                                 i,
                                                                                                 user,
@@ -349,6 +353,7 @@
                                                                                                     user = game.get("user");
                                                                                                     user.fetch({
                                                                                                         success: function (cUser) {
+                                                                                                            console.log(cUser);
                                                                                                             cUser.increment("score", 2);
                                                                                                             cUser.save();
                                                                                                         }
@@ -388,6 +393,7 @@
                                                                                     var resQQuery = new Parse.Query(Quarter);
 
                                                                                     resQQuery.equalTo("name", quartGame.get("name"));
+                                                                                    resQQuery.notEqualTo("name", "results");
                                                                                     resQQuery.find({
                                                                                         success: function (qGames) {
                                                                                             var glen = qGames.length,
@@ -442,6 +448,7 @@
                                                                                     var resSQuery = new Parse.Query(Semi);
 
                                                                                     resSQuery.equalTo("name", semiGame.get("name"));
+                                                                                    resSQuery.notEqualTo("name", "results");
                                                                                     resSQuery.find({
                                                                                         success: function (sGames) {
                                                                                             var glen = sGames.length,
@@ -496,6 +503,7 @@
                                                                                     var resFQuery = new Parse.Query(Final);
 
                                                                                     resFQuery.equalTo("name", finalGame.get("name"));
+                                                                                    resFQuery.notEqualTo("name", "results");
                                                                                     resFQuery.find({
                                                                                         success: function (fGames) {
                                                                                             var glen = fGames.length,
@@ -532,11 +540,13 @@
                                                                         });
 
                                                                         if (currentUser.get("name") === "results") {
+                                                                            console.log("inside dd");
                                                                             var resWQuery = new Parse.Query(Parse.User);
 
                                                                             resWQuery.notEqualTo("name", "results");
                                                                             resWQuery.find({
                                                                                 success: function (users) {
+                                                                                    console.log(users);
                                                                                     var ulen = users.length,
                                                                                         i, user;
 
@@ -587,10 +597,10 @@
                             }
 
                             scoreArray.sort(function (a,b) {
-                                if (a.points < b.points) {
+                                if (a.points > b.points) {
                                     return -1;
                                 }
-                                if (a.points > b.points) {
+                                if (a.points < b.points) {
                                     return 1;
                                 }
                                 return 0;
