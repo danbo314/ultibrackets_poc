@@ -411,7 +411,7 @@
                     var resultsQuery = new Parse.Query(Parse.User);
 
                     resultsQuery.include("[PoolPlayGame.Prequarter.Quarter.Semi.Final]");
-                    resultsQuery.get("EMkJ2jvXas", {
+                    resultsQuery.get("EwxQnNGEsf", {
                         success: function (results) {
                             console.log(results.get("PoolPlayGame"));
                             var userQuery = new Parse.Query(Parse.User);
