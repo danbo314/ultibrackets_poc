@@ -291,7 +291,11 @@
 
                                                                                                 if (game.get(fieldT)) {
                                                                                                     user = game.get("user");
-                                                                                                    Parse.Cloud.run('incrementUserScore', { userPointer: user, weight: 1 });
+                                                                                                    user.fetch({
+                                                                                                        success: function (cUser) {
+                                                                                                            Parse.Cloud.run('incrementUserScore', { userId: cUser.id, weight: 1 });
+                                                                                                        }
+                                                                                                    });
                                                                                                 }
                                                                                             }
                                                                                         }
@@ -346,7 +350,11 @@
 
                                                                                                 if (game.get("selected")) {
                                                                                                     user = game.get("user");
-                                                                                                    Parse.Cloud.run('incrementUserScore', { userPointer: user, weight: 2 });
+                                                                                                    user.fetch({
+                                                                                                        success: function (cUser) {
+                                                                                                            Parse.Cloud.run('incrementUserScore', { userId: cUser.id, weight: 2 });
+                                                                                                        }
+                                                                                                    });
                                                                                                 }
                                                                                             }
                                                                                         }
@@ -395,7 +403,11 @@
 
                                                                                                 if (game.get("selected")) {
                                                                                                     user = game.get("user");
-                                                                                                    Parse.Cloud.run('incrementUserScore', { userPointer: user, weight: 3 });
+                                                                                                    user.fetch({
+                                                                                                        success: function (cUser) {
+                                                                                                            Parse.Cloud.run('incrementUserScore', { userId: cUser.id, weight: 3 });
+                                                                                                        }
+                                                                                                    });
                                                                                                 }
                                                                                             }
                                                                                         }
@@ -445,7 +457,11 @@
 
                                                                                                 if (game.get("selected")) {
                                                                                                     user = game.get("user");
-                                                                                                    Parse.Cloud.run('incrementUserScore', { userPointer: user, weight: 5 });
+                                                                                                    user.fetch({
+                                                                                                        success: function (cUser) {
+                                                                                                            Parse.Cloud.run('incrementUserScore', { userId: cUser.id, weight: 5 });
+                                                                                                        }
+                                                                                                    });
                                                                                                 }
                                                                                             }
                                                                                         }
@@ -495,7 +511,11 @@
 
                                                                                                 if (game.get("selected")) {
                                                                                                     user = game.get("user");
-                                                                                                    Parse.Cloud.run('incrementUserScore', { userPointer: user, weight: 10 });
+                                                                                                    user.fetch({
+                                                                                                        success: function (cUser) {
+                                                                                                            Parse.Cloud.run('incrementUserScore', { userId: cUser.id, weight: 10 });
+                                                                                                        }
+                                                                                                    });
                                                                                                 }
                                                                                             }
                                                                                         }
@@ -526,7 +546,7 @@
                                                                                         user = users[i];
 
                                                                                         if (user.get("winner") === winner) {
-                                                                                            Parse.Cloud.run('incrementUserScore', { user: user, weight: 15 });
+                                                                                            Parse.Cloud.run('incrementUserScore', { userId: user.id, weight: 15 });
                                                                                         }
                                                                                     }
                                                                                 }
