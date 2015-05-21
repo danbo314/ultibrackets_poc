@@ -513,9 +513,11 @@ function createMatchups(user, pool, poolKey, ParsePPGame) {
                 t2: pool[j],
                 t1Selected: false,
                 t2Selected: false
+            }, {
+                success: function () {
+                    relation.add(ParseGame);
+                }
             });
-
-            relation.add(ParseGame);
         }
     }
 
@@ -553,32 +555,44 @@ function createCheckBoxes(user, pools, ParsePreQ, ParseQ, ParseSemi, ParseFinal)
                 pool: pool_key,
                 name: team,
                 selected: false
+            }, {
+                success: function () {
+                    pqRel.add(pq);
+                }
             });
-            pqRel.add(pq);
 
             q.save({
                 user: user,
                 pool: pool_key,
                 name: team,
                 selected: false
+            }, {
+                success: function () {
+                    qRel.add(q);
+                }
             });
-            qRel.add(q);
 
             s.save({
                 user: user,
                 pool: pool_key,
                 name: team,
                 selected: false
+            }, {
+                success: function () {
+                    sRel.add(s);
+                }
             });
-            sRel.add(s);
 
             f.save({
                 user: user,
                 pool: pool_key,
                 name: team,
                 selected: false
+            }, {
+                success: function () {
+                    fRel.add(f);
+                }
             });
-            fRel.add(f);
         }
     }
 
