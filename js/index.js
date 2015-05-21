@@ -137,12 +137,14 @@ function createMatchups(user, pool, poolKey, ParsePPGame) {
             ParseGame.set("t2", pool[j]);
             ParseGame.set("t1Selected", false);
             ParseGame.set("t2Selected", false);
-            ParseGame.save();
-            ParseGameArray.push(ParseGame);
+            //ParseGame.save();
+            //ParseGameArray.push(ParseGame);
+            user.add("ppGames",ParseGame);
         }
     }
 
-    return ParseGameArray;
+    //return ParseGameArray;
+    return user;
 }
 
 function createCheckBoxes(user, pools, ParsePreQ, ParseQ, ParseSemi, ParseFinal) {
@@ -176,35 +178,39 @@ function createCheckBoxes(user, pools, ParsePreQ, ParseQ, ParseSemi, ParseFinal)
             pq.set("name", team);
             pq.set("selected", false);
             pq.save();
-            pqArray.push(pq);
+            //pqArray.push(pq);
+            user.add("pqGames", pq);
 
             q.set("user", user);
             q.set("pool", pool_key);
             q.set("name", team);
             q.set("selected", false);
             q.save();
-            qArray.push(q);
+            //qArray.push(q);
+            user.add("qGames", q);
 
             s.set("user", user);
             s.set("pool", pool_key);
             s.set("name", team);
             s.set("selected", false);
             s.save();
-            sArray.push(s);
+            //sArray.push(s);
+            user.add("sGames", s);
 
             f.set("user", user);
             f.set("pool", pool_key);
             f.set("name", team);
             f.set("selected", false);
             f.save();
-            fArray.push(f);
+            //fArray.push(f);
+            user.add("fGames", f);
         }
     }
 
-    user.set("pqGames", pqArray);
-    user.set("qGames", qArray);
-    user.set("sGames", sArray);
-    user.set("fGames", fArray);
+    //user.set("pqGames", pqArray);
+    //user.set("qGames", qArray);
+    //user.set("sGames", sArray);
+    //user.set("fGames", fArray);
 
     return user;
 }
