@@ -39,17 +39,32 @@
     width: 100%;
 }
 
-#pools {
+#profile > img,
+#content > img {
+    width: 256px;
+    height: 256px;
+    display: block;
+    margin: 0 auto;
+}
+
+#pools,
+#board {
     width: 600px;
     margin: 0 auto 100px auto;
     font-size: 18px;
 }
 
-#pools > table {
+#board {
+    width: 500px;
+}
+
+#pools > table,
+#board > table {
     width: 100%;
 }
 
-#pools th {
+#pools th,
+#board th:not(:first-child) {
     text-transform: uppercase;
     font-weight: 600;
     font-size: 20px;

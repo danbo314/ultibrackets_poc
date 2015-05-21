@@ -403,7 +403,66 @@
                     });
                 },
                 leaderboard: function () {
-                    $("#content").empty();
+                    $("#content").html("<img src='../img/loader.gif'/>");
+                    var resultsQuery = new Parse.Query(Parse.User);
+
+                    resultsQuery.include("[PoolPlayGame.Prequarter.Quarter.Semi.Final]");
+                    resultsQuery.get("EMkJ2jvXas", {
+                        success: function (results) {
+                            console.log(results);
+                            var userQuery = new Parse.Query(Parse.User);
+
+                            userQuery.include("[PoolPlayGame.Prequarter.Quarter.Semi.Final]");
+                            userQuery.notEqualTo("name", "results");
+                            userQuery.find({
+                                success: function (users) {
+                                    console.log(users);
+                                    var scoreArray = [],
+                                        ulen = users.length,
+                                        i, user,
+                                        score;
+
+                                    for (i = 0; i < ulen; i++) {
+                                        user = users[i];
+                                        score = 0;
+
+                                        score += getPoolPlayScore(user, results);
+                                        score += getPreQScore(user, results);
+                                        score += getQuartersScore(user, results);
+                                        score += getSemisScore(user, results);
+                                        score += getFinalsScore(user, results);
+
+                                        scoreArray.push({
+                                            points: score,
+                                            name: user.get("name"),
+                                            winner: user.get("winner")
+                                        });
+                                    }
+
+                                    scoreArray.sort(function (a,b) {
+                                        if (a.points < b.points) {
+                                            return -1;
+                                        }
+                                        if (a.points > b.points) {
+                                            return 1;
+                                        }
+                                        return 0;
+                                    });
+
+                                    $.ajax({
+                                        url: "../html/tpl/leaderboard.tpl",
+                                        success: function (data) {
+                                            var template = Handlebars.compile(data);
+
+                                            $("#content").html(template({
+                                                users: scoreArray
+                                            }));
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    })
                 }
             },
             showContent = function () {
@@ -507,4 +566,24 @@ function createCheckBoxes(user, pools, ParsePreQ, ParseQ, ParseSemi, ParseFinal)
             });
         }
     }
+}
+
+function getPoolPlayScore(user, results) {
+    
+}
+
+function getPreQScore(user, results) {
+
+}
+
+function getQuartersScore(user, results) {
+
+}
+
+function getSemisScore(user, results) {
+
+}
+
+function getFinalsScore(user, results) {
+
 }
