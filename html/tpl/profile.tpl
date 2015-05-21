@@ -103,7 +103,7 @@
     <h2>Pick Your Winner</h2>
     <select>
         {{#each list}}
-            <option {{#if disabled}}disabled {{/if}}{{#if selected}}selected {{/if}}value="{{this}}">{{this}}</option>
+            <option {{#if disabled}}disabled {{/if}}{{#if selected}}selected {{/if}}value="{{val}}">{{val}}</option>
         {{/each}}
     </select>
 </div>
