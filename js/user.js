@@ -49,21 +49,6 @@
             },
             contentMap = {
                 profile: function () {
-                    if (!currentUser.get("hasMatchups")) {
-                        var plen = pools.length,
-                            i;
-
-                        for (i = 0; i < plen; i++) {
-                            createMatchups(currentUser, pools[i].pool, pools[i].label.slice(-1), PoolPlayGame);
-                        }
-
-                        createCheckBoxes(currentUser, pools, Prequarter, Quarter, Semi, Final);
-
-                        currentUser.save({
-                           hasMatchups: true
-                        });
-                    }
-
                     //load from Parse
                     var ppQuery = new Parse.Query(PoolPlayGame),
                         ppMatches = [],
@@ -495,105 +480,6 @@
     }
 
 }(jQuery));
-
-function createMatchups(user, pool, poolKey, ParsePPGame) {
-    var plen = pool.length,
-        i, j,
-        ParseGame;
-
-    for (i = 0; i < plen; i++) {
-        for (j = i+1; j < plen; j++) {
-            //create new Parse object
-            ParseGame = new ParsePPGame();
-            ParseGame.save({
-                user: user,
-                pool: poolKey,
-                t1: pool[i],
-                t2: pool[j],
-                t1Selected: false,
-                t2Selected: false
-            }, {
-                success: function (game) {
-                    user.add("ppGames", game);
-                    user.save();
-                }
-            });
-        }
-    }
-}
-
-function createCheckBoxes(user, pools, ParsePreQ, ParseQ, ParseSemi, ParseFinal) {
-    var i, j,
-        plen = pools.length,
-        pplen,
-        pool,
-        team,
-        pq, q, s, f,
-        pool_key;
-
-    for (i = 0; i < plen; i++) {
-        pool = pools[i];
-        pplen = pool.pool.length;
-        pool_key = pool.label.slice(-1);
-
-        for (j = 0; j < pplen; j++) {
-            team = pool.pool[j];
-
-            pq = new ParsePreQ();
-            q = new ParseQ();
-            s = new ParseSemi();
-            f = new ParseFinal();
-
-            pq.save({
-                user: user,
-                pool: pool_key,
-                name: team,
-                selected: false
-            }, {
-                success: function (game) {
-                    user.add("pqGames", game);
-                    user.save();
-                }
-            });
-
-            q.save({
-                user: user,
-                pool: pool_key,
-                name: team,
-                selected: false
-            }, {
-                success: function (game) {
-                    user.add("qGames", game);
-                    user.save();
-                }
-            });
-
-            s.save({
-                user: user,
-                pool: pool_key,
-                name: team,
-                selected: false
-            }, {
-                success: function (game) {
-                    user.add("sGames", game);
-                    user.save();
-                }
-            });
-
-            f.save({
-                user: user,
-                pool: pool_key,
-                name: team,
-                selected: false
-            }, {
-                success: function (game) {
-                    user.add("fGames", game);
-                    user.save();
-                }
-            });
-        }
-    }
-}
 
 function getPoolPlayScore(user, results) {
 
