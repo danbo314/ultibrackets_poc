@@ -10,16 +10,7 @@
         return index + 1;
     });
 
-    var currentUser = Parse.User.current(),
-        resultsQuery = new Parse.Query(Parse.User),
-        results;
-
-    resultsQuery.equalTo("name", "results");
-    resultsQuery.find({
-        success: function (res) {
-            results = res;
-        }
-    });
+    var currentUser = Parse.User.current();
 
     if (currentUser) {
         var PoolPlayGame = Parse.Object.extend("PoolPlayGame"),
@@ -283,7 +274,7 @@
                                                                                 ppGame.set(fieldF, false);
                                                                                 ppGame.save();
 
-                                                                                if (currentUser.id === results.id) {
+                                                                                if (currentUser.get("name") === "results") {
                                                                                     var resPPGQuery = new Parse.Query(PoolPlayGame);
 
                                                                                     resPPGQuery.equalTo("ppgID", ppGame.get("ppgID"));
@@ -339,7 +330,7 @@
                                                                                     }
                                                                                 });
 
-                                                                                if (currentUser.id === results.id && that.checked) {
+                                                                                if (currentUser.get("name") === "results" && that.checked) {
                                                                                     var resPQQuery = new Parse.Query(Prequarter);
 
                                                                                     resPQQuery.equalTo("name", preqGame.get("name"));
@@ -391,7 +382,7 @@
                                                                                     }
                                                                                 });
 
-                                                                                if (currentUser.id === results.id && that.checked) {
+                                                                                if (currentUser.get("name") === "results" && that.checked) {
                                                                                     var resQQuery = new Parse.Query(Quarter);
 
                                                                                     resQQuery.equalTo("name", quartGame.get("name"));
@@ -444,7 +435,7 @@
                                                                                     }
                                                                                 });
 
-                                                                                if (currentUser.id === results.id && that.checked) {
+                                                                                if (currentUser.get("name") === "results" && that.checked) {
                                                                                     var resSQuery = new Parse.Query(Semi);
 
                                                                                     resSQuery.equalTo("name", semiGame.get("name"));
@@ -497,7 +488,7 @@
                                                                                     }
                                                                                 });
 
-                                                                                if (currentUser.id === results.id && that.checked) {
+                                                                                if (currentUser.get("name") === "results" && that.checked) {
                                                                                     var resFQuery = new Parse.Query(Final);
 
                                                                                     resFQuery.equalTo("name", finalGame.get("name"));
@@ -535,7 +526,7 @@
                                                                             winner: winner
                                                                         });
 
-                                                                        if (currentUser.id === results.id) {
+                                                                        if (currentUser.get("name") === "results") {
                                                                             var resWQuery = new Parse.Query(Parse.User);
 
                                                                             resWQuery.notEqualTo("name", "results");
