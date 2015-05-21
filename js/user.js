@@ -6,6 +6,10 @@
 
     Parse.initialize("AxAhmixCD23l9oxpKc02kJewBmdDt5UQ159RB7ni", "Xoypi5WdNOe5V0xGALSUvvFlbAqwE8TeX89TkFeL");
 
+    Handlebars.registerHelper("place", function (index){
+        return index + 1;
+    });
+
     var currentUser = Parse.User.current();
 
     if (currentUser) {
@@ -409,14 +413,14 @@
                     resultsQuery.include("[PoolPlayGame.Prequarter.Quarter.Semi.Final]");
                     resultsQuery.get("EMkJ2jvXas", {
                         success: function (results) {
-                            console.log(results);
+                            console.log(results.get("PoolPlayGame"));
                             var userQuery = new Parse.Query(Parse.User);
 
                             userQuery.include("[PoolPlayGame.Prequarter.Quarter.Semi.Final]");
                             userQuery.notEqualTo("name", "results");
                             userQuery.find({
                                 success: function (users) {
-                                    console.log(users);
+                                    console.log(users[0].get("PoolPlayGame"));
                                     var scoreArray = [],
                                         ulen = users.length,
                                         i, user,
@@ -569,7 +573,7 @@ function createCheckBoxes(user, pools, ParsePreQ, ParseQ, ParseSemi, ParseFinal)
 }
 
 function getPoolPlayScore(user, results) {
-    
+
 }
 
 function getPreQScore(user, results) {
