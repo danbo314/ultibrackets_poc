@@ -294,7 +294,12 @@
                                                                                                     user.fetch({
                                                                                                         success: function (cUser) {
                                                                                                             cUser.increment("score");
-                                                                                                            cUser.save();
+                                                                                                            cUser.save(null, {
+                                                                                                                success: function () {},
+                                                                                                                error: function () {
+                                                                                                                    console.log(arguments);
+                                                                                                                }
+                                                                                                            });
                                                                                                         }
                                                                                                     });
                                                                                                 }
@@ -353,9 +358,14 @@
                                                                                                     user = game.get("user");
                                                                                                     user.fetch({
                                                                                                         success: function (cUser) {
-                                                                                                            console.log(cUser);
+                                                                                                            console.log(cUser.get("score"));
                                                                                                             cUser.increment("score", 2);
-                                                                                                            cUser.save();
+                                                                                                            cUser.save(null, {
+                                                                                                                success: function () {},
+                                                                                                                error: function () {
+                                                                                                                    console.log(arguments);
+                                                                                                                }
+                                                                                                            });
                                                                                                         }
                                                                                                     });
                                                                                                 }
