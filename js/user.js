@@ -184,21 +184,28 @@
                                                                 });
                                                             }
 
-                                                            var temp = {},
+                                                            var listArr = [],
                                                                 currentWinner = currentUser.get("winner"),
-                                                                list = $.map(teams, function (team, i) {
-                                                                    if (i === 0) {
-                                                                        temp.disabled = true;
-                                                                        temp.selected = currentWinner ? false : true;
-                                                                    }
-                                                                    else {
-                                                                        temp.disabled = false;
-                                                                        temp.selected = currentWinner === team;
-                                                                    }
-                                                                    temp.val = team;
+                                                                tlen = teams.length,
+                                                                i, t,
+                                                                temp;
 
-                                                                    return temp;
-                                                                });
+                                                            for (i = 0; i < tlen; i ++) {
+                                                                t = teams[i];
+                                                                temp = {};
+
+                                                                if (i === 0) {
+                                                                    temp.disabled = true;
+                                                                    temp.selected = currentWinner ? false : true;
+                                                                }
+                                                                else {
+                                                                    temp.disabled = false;
+                                                                    temp.selected = currentWinner === t;
+                                                                }
+                                                                temp.val = t;
+
+                                                                listArr.push(temp);
+                                                            }
 
                                                             $.ajax({
                                                                 url: "../html/tpl/profile.tpl",
