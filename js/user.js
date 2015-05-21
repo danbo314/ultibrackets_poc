@@ -6,6 +6,10 @@
 
     Parse.initialize("AxAhmixCD23l9oxpKc02kJewBmdDt5UQ159RB7ni", "Xoypi5WdNOe5V0xGALSUvvFlbAqwE8TeX89TkFeL");
 
+    Handlebars.registerHelper("place", function (index){
+        return index + 1;
+    });
+
     var currentUser = Parse.User.current();
 
     if (currentUser) {
@@ -45,6 +49,21 @@
             },
             contentMap = {
                 profile: function () {
+                    if (!currentUser.get("hasMatchups")) {
+                        var plen = pools.length,
+                            i;
+
+                        for (i = 0; i < plen; i++) {
+                            createMatchups(currentUser, pools[i].pool, pools[i].label.slice(-1), PoolPlayGame);
+                        }
+
+                        createCheckBoxes(currentUser, pools, Prequarter, Quarter, Semi, Final);
+
+                        currentUser.save({
+                           hasMatchups: true
+                        });
+                    }
+
                     //load from Parse
                     var ppQuery = new Parse.Query(PoolPlayGame),
                         ppMatches = [],
@@ -391,16 +410,17 @@
                     $("#content").html("<img src='../img/loader.gif'/>");
                     var resultsQuery = new Parse.Query(Parse.User);
 
-                    resultsQuery.include("[ppGames.pqGames.qGames.sGames.fGames]");
-                    resultsQuery.get("gLDZ1Keg6l", {
+                    resultsQuery.include("[PoolPlayGame.Prequarter.Quarter.Semi.Final]");
+                    resultsQuery.get("EMkJ2jvXas", {
                         success: function (results) {
+                            console.log(results.get("PoolPlayGame"));
                             var userQuery = new Parse.Query(Parse.User);
 
-                            userQuery.include("[ppGames.pqGames.qGames.sGames.fGames]");
+                            userQuery.include("[PoolPlayGame.Prequarter.Quarter.Semi.Final]");
                             userQuery.notEqualTo("name", "results");
                             userQuery.find({
                                 success: function (users) {
-                                    console.log(users);
+                                    console.log(users[0].get("PoolPlayGame"));
                                     var scoreArray = [],
                                         ulen = users.length,
                                         i, user,
@@ -476,8 +496,84 @@
 
 }(jQuery));
 
+function createMatchups(user, pool, poolKey, ParsePPGame) {
+    var plen = pool.length,
+        i, j,
+        ParseGame;
+
+    for (i = 0; i < plen; i++) {
+        for (j = i+1; j < plen; j++) {
+            //create new Parse object
+            ParseGame = new ParsePPGame();
+            ParseGame.save({
+                user: user,
+                pool: poolKey,
+                t1: pool[i],
+                t2: pool[j],
+                t1Selected: false,
+                t2Selected: false
+            }, {
+                success: function () {}
+            });
+        }
+    }
+}
+
+function createCheckBoxes(user, pools, ParsePreQ, ParseQ, ParseSemi, ParseFinal) {
+    var i, j,
+        plen = pools.length,
+        pplen,
+        pool,
+        team,
+        pq, q, s, f,
+        pool_key;
+
+    for (i = 0; i < plen; i++) {
+        pool = pools[i];
+        pplen = pool.pool.length;
+        pool_key = pool.label.slice(-1);
+
+        for (j = 0; j < pplen; j++) {
+            team = pool.pool[j];
+
+            pq = new ParsePreQ();
+            q = new ParseQ();
+            s = new ParseSemi();
+            f = new ParseFinal();
+
+            pq.save({
+                user: user,
+                pool: pool_key,
+                name: team,
+                selected: false
+            });
+
+            q.save({
+                user: user,
+                pool: pool_key,
+                name: team,
+                selected: false
+            });
+
+            s.save({
+                user: user,
+                pool: pool_key,
+                name: team,
+                selected: false
+            });
+
+            f.save({
+                user: user,
+                pool: pool_key,
+                name: team,
+                selected: false
+            });
+        }
+    }
+}
+
 function getPoolPlayScore(user, results) {
-    
+
 }
 
 function getPreQScore(user, results) {
