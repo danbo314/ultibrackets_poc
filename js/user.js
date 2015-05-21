@@ -49,6 +49,7 @@
             },
             contentMap = {
                 profile: function () {
+                    $("#content").html("<img src='../img/loader.gif'/>");
                     if (!currentUser.get("hasMatchups")) {
                         var plen = pools.length,
                             i;
@@ -561,7 +562,6 @@
                                                                                         user = users[i];
 
                                                                                         if (user.get("winner") === winner) {
-                                                                                            console.log(user.id);
                                                                                             Parse.Cloud.run('incrementUserScore', { userId: user.id, weight: 15 }, {
                                                                                                 success: function () {},
                                                                                                 error: function () {}
