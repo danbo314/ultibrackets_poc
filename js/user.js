@@ -6,10 +6,6 @@
 
     Parse.initialize("AxAhmixCD23l9oxpKc02kJewBmdDt5UQ159RB7ni", "Xoypi5WdNOe5V0xGALSUvvFlbAqwE8TeX89TkFeL");
 
-    Handlebars.registerHelper("place", function (index){
-        return index + 1;
-    });
-
     var currentUser = Parse.User.current();
 
     if (currentUser) {
@@ -398,14 +394,13 @@
                     resultsQuery.include("[ppGames.pqGames.qGames.sGames.fGames]");
                     resultsQuery.get("gLDZ1Keg6l", {
                         success: function (results) {
-                            console.log(results.get("ppGames"));
                             var userQuery = new Parse.Query(Parse.User);
 
                             userQuery.include("[ppGames.pqGames.qGames.sGames.fGames]");
                             userQuery.notEqualTo("name", "results");
                             userQuery.find({
                                 success: function (users) {
-                                    console.log(users[0].get("PoolPlayGame"));
+                                    console.log(users);
                                     var scoreArray = [],
                                         ulen = users.length,
                                         i, user,
@@ -482,7 +477,7 @@
 }(jQuery));
 
 function getPoolPlayScore(user, results) {
-
+    
 }
 
 function getPreQScore(user, results) {
