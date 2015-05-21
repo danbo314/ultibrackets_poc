@@ -10,7 +10,16 @@
         return index + 1;
     });
 
-    var currentUser = Parse.User.current();
+    var currentUser = Parse.User.current(),
+        resultsQuery = new Parse.Query(Parse.Object),
+        results;
+
+    resultsQuery.equalTo("name", "results");
+    resultsQuery.find({
+        success: function (res) {
+            results = res;
+        }
+    });
 
     if (currentUser) {
         var PoolPlayGame = Parse.Object.extend("PoolPlayGame"),
@@ -270,10 +279,36 @@
                                                                         ppGQuery = new Parse.Query(PoolPlayGame);
                                                                         ppGQuery.get($self.parent().attr("id"), {
                                                                             success: function(ppGame) {
-                                                                                // The object was retrieved successfully.
                                                                                 ppGame.set(fieldT, true);
                                                                                 ppGame.set(fieldF, false);
                                                                                 ppGame.save();
+
+                                                                                if (currentUser.id === results.id) {
+                                                                                    var resPPGQuery = new Parse.Query(PoolPlayGame);
+
+                                                                                    resPPGQuery.equalTo("ppgID", ppGame.get("ppgID"));
+                                                                                    resPPGQuery.find({
+                                                                                        success: function (ppGames) {
+                                                                                            var glen = ppGames.length,
+                                                                                                i,
+                                                                                                user,
+                                                                                                game;
+
+                                                                                            for (i = 0; i < glen; i++) {
+                                                                                                game = ppGames[i];
+
+                                                                                                if (game.get(fieldT)) {
+                                                                                                    user = game.get("user");
+                                                                                                    user.fetch({
+                                                                                                        success: function (cUser) {
+                                                                                                            cUser.increment("score");
+                                                                                                        }
+                                                                                                    });
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    });
+                                                                                }
                                                                             },
                                                                             error: function () {
                                                                                 console.log("could not find game");
@@ -303,8 +338,34 @@
                                                                                         }
                                                                                     }
                                                                                 });
-                                                                            }
 
+                                                                                if (currentUser.id === results.id && that.checked) {
+                                                                                    var resPQQuery = new Parse.Query(Prequarter);
+
+                                                                                    resPQQuery.equalTo("name", preqGame.get("name"));
+                                                                                    resPQQuery.find({
+                                                                                        success: function (pqGames) {
+                                                                                            var glen = pqGames.length,
+                                                                                                i,
+                                                                                                user,
+                                                                                                game;
+
+                                                                                            for (i = 0; i < glen; i++) {
+                                                                                                game = pqGames[i];
+
+                                                                                                if (game.get("selected")) {
+                                                                                                    user = game.get("user");
+                                                                                                    user.fetch({
+                                                                                                        success: function (cUser) {
+                                                                                                            cUser.increment("score", 2);
+                                                                                                        }
+                                                                                                    });
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    });
+                                                                                }
+                                                                            }
                                                                         });
                                                                     });
 
@@ -329,6 +390,33 @@
                                                                                         }
                                                                                     }
                                                                                 });
+
+                                                                                if (currentUser.id === results.id && that.checked) {
+                                                                                    var resQQuery = new Parse.Query(Quarter);
+
+                                                                                    resQQuery.equalTo("name", quartGame.get("name"));
+                                                                                    resQQuery.find({
+                                                                                        success: function (qGames) {
+                                                                                            var glen = qGames.length,
+                                                                                                i,
+                                                                                                user,
+                                                                                                game;
+
+                                                                                            for (i = 0; i < glen; i++) {
+                                                                                                game = qGames[i];
+
+                                                                                                if (game.get("selected")) {
+                                                                                                    user = game.get("user");
+                                                                                                    user.fetch({
+                                                                                                        success: function (cUser) {
+                                                                                                            cUser.increment("score", 3);
+                                                                                                        }
+                                                                                                    });
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    });
+                                                                                }
                                                                             }
 
                                                                         });
@@ -355,6 +443,33 @@
                                                                                         }
                                                                                     }
                                                                                 });
+
+                                                                                if (currentUser.id === results.id && that.checked) {
+                                                                                    var resSQuery = new Parse.Query(Semi);
+
+                                                                                    resSQuery.equalTo("name", semiGame.get("name"));
+                                                                                    resSQuery.find({
+                                                                                        success: function (sGames) {
+                                                                                            var glen = sGames.length,
+                                                                                                i,
+                                                                                                user,
+                                                                                                game;
+
+                                                                                            for (i = 0; i < glen; i++) {
+                                                                                                game = sGames[i];
+
+                                                                                                if (game.get("selected")) {
+                                                                                                    user = game.get("user");
+                                                                                                    user.fetch({
+                                                                                                        success: function (cUser) {
+                                                                                                            cUser.increment("score", 5);
+                                                                                                        }
+                                                                                                    });
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    });
+                                                                                }
                                                                             }
 
                                                                         });
@@ -381,17 +496,64 @@
                                                                                         }
                                                                                     }
                                                                                 });
+
+                                                                                if (currentUser.id === results.id && that.checked) {
+                                                                                    var resFQuery = new Parse.Query(Final);
+
+                                                                                    resFQuery.equalTo("name", finalGame.get("name"));
+                                                                                    resFQuery.find({
+                                                                                        success: function (fGames) {
+                                                                                            var glen = fGames.length,
+                                                                                                i,
+                                                                                                user,
+                                                                                                game;
+
+                                                                                            for (i = 0; i < glen; i++) {
+                                                                                                game = fGames[i];
+
+                                                                                                if (game.get("selected")) {
+                                                                                                    user = game.get("user");
+                                                                                                    user.fetch({
+                                                                                                        success: function (cUser) {
+                                                                                                            cUser.increment("score", 10);
+                                                                                                        }
+                                                                                                    });
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    });
+                                                                                }
                                                                             }
 
                                                                         });
                                                                     });
 
                                                                     $("#winner select").change(function () {
-                                                                        var $self = $(this);
+                                                                        var winner = $(this).find(":selected").val();
 
                                                                         currentUser.save({
-                                                                            winner: $self.find(":selected").val()
+                                                                            winner: winner
                                                                         });
+
+                                                                        if (currentUser.id === results.id) {
+                                                                            var resWQuery = new Parse.Query(Parse.User);
+
+                                                                            resWQuery.notEqualTo("name", "results");
+                                                                            resWQuery.find({
+                                                                                success: function (users) {
+                                                                                    var ulen = users.length,
+                                                                                        i, user;
+
+                                                                                    for (i = 0; i < ulen; i++) {
+                                                                                        user = users[i];
+
+                                                                                        if (user.get("winner") === winner) {
+                                                                                            user.increment("score", 15);
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            });
+                                                                        }
                                                                     });
                                                                 }
                                                             });
@@ -408,65 +570,47 @@
                 },
                 leaderboard: function () {
                     $("#content").html("<img src='../img/loader.gif'/>");
-                    var resultsQuery = new Parse.Query(Parse.User);
+                    var userQuery = new Parse.Query(Parse.User);
 
-                    resultsQuery.include("[PoolPlayGame.Prequarter.Quarter.Semi.Final]");
-                    resultsQuery.get("EwxQnNGEsf", {
-                        success: function (results) {
-                            console.log(results.get("PoolPlayGame"));
-                            var userQuery = new Parse.Query(Parse.User);
+                    userQuery.notEqualTo("name", "results");
+                    userQuery.find({
+                        success: function (users) {
+                            var scoreArray = [],
+                                ulen = users.length,
+                                i, user;
 
-                            userQuery.include("[PoolPlayGame.Prequarter.Quarter.Semi.Final]");
-                            userQuery.notEqualTo("name", "results");
-                            userQuery.find({
-                                success: function (users) {
-                                    console.log(users[0].get("PoolPlayGame"));
-                                    var scoreArray = [],
-                                        ulen = users.length,
-                                        i, user,
-                                        score;
+                            for (i = 0; i < ulen; i++) {
+                                user = users[i];
 
-                                    for (i = 0; i < ulen; i++) {
-                                        user = users[i];
-                                        score = 0;
+                                scoreArray.push({
+                                    points: user.get("score"),
+                                    name: user.get("name"),
+                                    winner: user.get("winner")
+                                });
+                            }
 
-                                        score += getPoolPlayScore(user, results);
-                                        score += getPreQScore(user, results);
-                                        score += getQuartersScore(user, results);
-                                        score += getSemisScore(user, results);
-                                        score += getFinalsScore(user, results);
+                            scoreArray.sort(function (a,b) {
+                                if (a.points < b.points) {
+                                    return -1;
+                                }
+                                if (a.points > b.points) {
+                                    return 1;
+                                }
+                                return 0;
+                            });
 
-                                        scoreArray.push({
-                                            points: score,
-                                            name: user.get("name"),
-                                            winner: user.get("winner")
-                                        });
-                                    }
+                            $.ajax({
+                                url: "../html/tpl/leaderboard.tpl",
+                                success: function (data) {
+                                    var template = Handlebars.compile(data);
 
-                                    scoreArray.sort(function (a,b) {
-                                        if (a.points < b.points) {
-                                            return -1;
-                                        }
-                                        if (a.points > b.points) {
-                                            return 1;
-                                        }
-                                        return 0;
-                                    });
-
-                                    $.ajax({
-                                        url: "../html/tpl/leaderboard.tpl",
-                                        success: function (data) {
-                                            var template = Handlebars.compile(data);
-
-                                            $("#content").html(template({
-                                                users: scoreArray
-                                            }));
-                                        }
-                                    });
+                                    $("#content").html(template({
+                                        users: scoreArray
+                                    }));
                                 }
                             });
                         }
-                    })
+                    });
                 }
             },
             showContent = function () {
@@ -498,7 +642,7 @@
 
 function createMatchups(user, pool, poolKey, ParsePPGame) {
     var plen = pool.length,
-        i, j,
+        i, j, k = 0,
         ParseGame;
 
     for (i = 0; i < plen; i++) {
@@ -508,13 +652,14 @@ function createMatchups(user, pool, poolKey, ParsePPGame) {
             ParseGame.save({
                 user: user,
                 pool: poolKey,
+                ppgID: poolKey+"_"+k,
                 t1: pool[i],
                 t2: pool[j],
                 t1Selected: false,
                 t2Selected: false
-            }, {
-                success: function () {}
             });
+
+            k++;
         }
     }
 }
@@ -570,24 +715,4 @@ function createCheckBoxes(user, pools, ParsePreQ, ParseQ, ParseSemi, ParseFinal)
             });
         }
     }
-}
-
-function getPoolPlayScore(user, results) {
-
-}
-
-function getPreQScore(user, results) {
-
-}
-
-function getQuartersScore(user, results) {
-
-}
-
-function getSemisScore(user, results) {
-
-}
-
-function getFinalsScore(user, results) {
-
 }
