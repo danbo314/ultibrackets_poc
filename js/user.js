@@ -275,11 +275,13 @@
                                                                                 ppGame.save();
 
                                                                                 if (currentUser.get("name") === "results") {
+                                                                                    console.log("this is master");
                                                                                     var resPPGQuery = new Parse.Query(PoolPlayGame);
 
                                                                                     resPPGQuery.equalTo("ppgID", ppGame.get("ppgID"));
                                                                                     resPPGQuery.find({
                                                                                         success: function (ppGames) {
+                                                                                            console.log(ppGames);
                                                                                             var glen = ppGames.length,
                                                                                                 i,
                                                                                                 user,
@@ -292,6 +294,7 @@
                                                                                                     user = game.get("user");
                                                                                                     user.fetch({
                                                                                                         success: function (cUser) {
+                                                                                                            console.log(cUser);
                                                                                                             cUser.increment("score");
                                                                                                         }
                                                                                                     });
