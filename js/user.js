@@ -499,8 +499,7 @@
 function createMatchups(user, pool, poolKey, ParsePPGame) {
     var plen = pool.length,
         i, j,
-        ParseGame,
-        relation = user.relation("ppGames");
+        ParseGame;
 
     for (i = 0; i < plen; i++) {
         for (j = i+1; j < plen; j++) {
@@ -515,13 +514,12 @@ function createMatchups(user, pool, poolKey, ParsePPGame) {
                 t2Selected: false
             }, {
                 success: function (game) {
-                    relation.add(game);
+                    user.add("ppGames", game);
+                    user.save();
                 }
             });
         }
     }
-
-    user.save();
 }
 
 function createCheckBoxes(user, pools, ParsePreQ, ParseQ, ParseSemi, ParseFinal) {
@@ -531,11 +529,7 @@ function createCheckBoxes(user, pools, ParsePreQ, ParseQ, ParseSemi, ParseFinal)
         pool,
         team,
         pq, q, s, f,
-        pool_key,
-        pqRel = user.relation("pqGames"),
-        qRel = user.relation("qGames"),
-        sRel = user.relation("sGames"),
-        fRel = user.relation("fGames");
+        pool_key;
 
     for (i = 0; i < plen; i++) {
         pool = pools[i];
@@ -557,7 +551,8 @@ function createCheckBoxes(user, pools, ParsePreQ, ParseQ, ParseSemi, ParseFinal)
                 selected: false
             }, {
                 success: function (game) {
-                    pqRel.add(game);
+                    user.add("pqGames", game);
+                    user.save();
                 }
             });
 
@@ -568,7 +563,8 @@ function createCheckBoxes(user, pools, ParsePreQ, ParseQ, ParseSemi, ParseFinal)
                 selected: false
             }, {
                 success: function (game) {
-                    qRel.add(game);
+                    user.add("qGames", game);
+                    user.save();
                 }
             });
 
@@ -579,7 +575,8 @@ function createCheckBoxes(user, pools, ParsePreQ, ParseQ, ParseSemi, ParseFinal)
                 selected: false
             }, {
                 success: function (game) {
-                    sRel.add(game);
+                    user.add("sGames", game);
+                    user.save();
                 }
             });
 
@@ -590,13 +587,12 @@ function createCheckBoxes(user, pools, ParsePreQ, ParseQ, ParseSemi, ParseFinal)
                 selected: false
             }, {
                 success: function (game) {
-                    fRel.add(game);
+                    user.add("fGames", game);
+                    user.save();
                 }
             });
         }
     }
-
-    user.save();
 }
 
 function getPoolPlayScore(user, results) {
