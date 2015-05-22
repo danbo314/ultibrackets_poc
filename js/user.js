@@ -235,6 +235,7 @@
                                                                     if (currentUser.get("disabled")) {
                                                                         $("#content input:checkbox").attr("disabled", true);
                                                                         $("#content input:checkbox + span").css("opacity", .4);
+                                                                        $("#content select").attr("disabled", true);
                                                                     }
                                                                     else {
                                                                         if ($("#preq input:checkbox:checked").length === 8) {
