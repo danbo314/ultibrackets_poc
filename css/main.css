@@ -45,6 +45,11 @@ h2 {
     background: lightgrey;
 }
 
+.button.disabled {
+    opacity: .4;
+    cursor: default;
+}
+
 #loginReg .button {
     width: 100px;
     margin: 0 auto;

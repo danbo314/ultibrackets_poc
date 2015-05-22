@@ -232,24 +232,30 @@
                                                                         list: listArr
                                                                     }));
 
-                                                                    if ($("#preq input:checkbox:checked").length === 8) {
-                                                                        $("#preq input:checkbox:not(:checked)").attr("disabled", true);
-                                                                        $("#preq input:checkbox:not(:checked) + span").css("opacity",.4);
+                                                                    if (currentUser.get("locked")) {
+                                                                        $("#content input:checkbox").attr("disabled", true);
+                                                                        $("#content input:checkbox + span").css("opacity", .4);
                                                                     }
-                                                                    if ($("#quart input:checkbox:checked").length === 8) {
-                                                                        $("#quart input:checkbox:not(:checked)").attr("disabled", true);
-                                                                        $("#quart input:checkbox:not(:checked) + span").css("opacity",.4);
-                                                                    }
-                                                                    if ($("#semis input:checkbox:checked").length === 4) {
-                                                                        $("#semis input:checkbox:not(:checked)").attr("disabled", true);
-                                                                        $("#semis input:checkbox:not(:checked) + span").css("opacity",.4);
-                                                                    }
-                                                                    if ($("#finals input:checkbox:checked").length === 2) {
-                                                                        $("#finals input:checkbox:not(:checked)").attr("disabled", true);
-                                                                        $("#finals input:checkbox:not(:checked) + span").css("opacity",.4);
+                                                                    else {
+                                                                        if ($("#preq input:checkbox:checked").length === 8) {
+                                                                            $("#preq input:checkbox:not(:checked)").attr("disabled", true);
+                                                                            $("#preq input:checkbox:not(:checked) + span").css("opacity", .4);
+                                                                        }
+                                                                        if ($("#quart input:checkbox:checked").length === 8) {
+                                                                            $("#quart input:checkbox:not(:checked)").attr("disabled", true);
+                                                                            $("#quart input:checkbox:not(:checked) + span").css("opacity", .4);
+                                                                        }
+                                                                        if ($("#semis input:checkbox:checked").length === 4) {
+                                                                            $("#semis input:checkbox:not(:checked)").attr("disabled", true);
+                                                                            $("#semis input:checkbox:not(:checked) + span").css("opacity", .4);
+                                                                        }
+                                                                        if ($("#finals input:checkbox:checked").length === 2) {
+                                                                            $("#finals input:checkbox:not(:checked)").attr("disabled", true);
+                                                                            $("#finals input:checkbox:not(:checked) + span").css("opacity", .4);
+                                                                        }
                                                                     }
 
-                                                                    $(".ppGame").click(function () {
+                                                                    $(".ppGame:not(.disabled)").click(function () {
                                                                         var $self = $(this);
 
                                                                         $self.siblings(".selected").removeClass("selected");
@@ -673,7 +679,8 @@ function createMatchups(user, pool, poolKey, ParsePPGame) {
                 t1: pool[i],
                 t2: pool[j],
                 t1Selected: false,
-                t2Selected: false
+                t2Selected: false,
+                disabled: user.get("disabled")
             });
 
             k++;
