@@ -232,7 +232,7 @@
                                                                         list: listArr
                                                                     }));
 
-                                                                    if (currentUser.get("locked")) {
+                                                                    if (currentUser.get("disabled")) {
                                                                         $("#content input:checkbox").attr("disabled", true);
                                                                         $("#content input:checkbox + span").css("opacity", .4);
                                                                     }

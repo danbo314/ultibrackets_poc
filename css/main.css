@@ -41,7 +41,7 @@ h2 {
     cursor: pointer;
 }
 
-.button:hover {
+.button:not(.disabled):hover {
     background: lightgrey;
 }
 
