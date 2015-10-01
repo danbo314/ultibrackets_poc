@@ -33,14 +33,13 @@
                 });
             },
             pools = [
-                { label: "Pool A", pool: ["Pittsburgh (1)", "Georgia (8)", "Wisconsin (12)", "Texas (13)", "Auburn (17)"] },
-                { label: "Pool B", pool: ["Texas A&M (2)", "UCF (7)", "Minnesota (11)", "W. Washington (14)", "Cincinnati (18)"] },
-                { label: "Pool C", pool: ["UNC (3)", "Florida State (6)", "Maryland (10)", "Oregon (15)", "Illinois (19)"] },
-                { label: "Pool D", pool: ["UNCW (4)", "Colorado (5)", "UMass (9)", "UCSB (16)", "Cornell (20)"] }
+                { label: "Pool A", pool: ["Revolver (1)", "Machine (8)", "Patrol (12)", "Madison Club (13)"] },
+                { label: "Pool B", pool: ["Doublewide (2)", "Rhino (7)", "Ring of Fire (11)", "Sub Zero (14)"] },
+                { label: "Pool C", pool: ["Sockeye (3)", "Truck Stop (6)", "Florida United (10)", "GOAT (15)"] },
+                { label: "Pool D", pool: ["High Five (4)", "Johnny Bravo (5)", "Ironside (9)", "Prairie Fire (16)"] }
             ],
-            teams = ["-- Select your winner --","Pittsburgh (1)","Texas A&M (2)","UNC (3)","UNCW (4)","Colorado (5)","Florida State (6)","UCF (7)","Georgia (8)",
-                "UMass (9)","Maryland (10)","Minnesota (11)","Wisconsin (12)","Texas (13)","W. Washington (14)","Oregon (15)","UCSB (16)",
-                "Auburn (17)","Cincinnati (18)","Illinois (19)","Cornell (20)"],
+            teams = ["-- Select your winner --","Revolver (1)","Doublewide (2)","Sockeye (3)","High Five (4)","Johnny Bravo (5)","Truck Stop (6)","Rhino (7)","Machine (8)",
+                "Ironside (9)","Florida United (10)","Ring of Fire (11)","Patrol (12)","Madison Club (13)","Sub Zero (14)","GOAT (15)","Prairie Fire (16)"],
             poolToIdx = {
                 A: 0,
                 B: 1,
