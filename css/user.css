@@ -99,3 +99,7 @@
 #preq h2 {
     text-decoration: line-through;
 }
+
+.checkTitle.disabled {
+    opacity: .4;
+}
