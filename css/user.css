@@ -95,3 +95,7 @@
     display: block;
     margin: 0 auto;
 }
+
+#preq h2 {
+    text-decoration: line-through;
+}
